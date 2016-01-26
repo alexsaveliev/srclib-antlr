@@ -31,7 +31,7 @@ public class scan {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 File f = file.toFile();
-                if (!f.getName().endsWith(".edn")
+                if (!f.getName().endsWith(".clj")
                         && !f.getName().endsWith(".cljs")
                         && !f.getName().endsWith(".edn")
                         && !f.getName().endsWith(".cljc")

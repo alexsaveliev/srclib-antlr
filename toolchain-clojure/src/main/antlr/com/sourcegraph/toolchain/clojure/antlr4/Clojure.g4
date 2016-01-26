@@ -35,15 +35,23 @@ grammar Clojure;
 file: form *;
 
 form: literal
+    | function_def
+    | name_def
     | list
     | vector
     | map
     | reader_macro
     ;
 
+function_def: '(' 'defn' fn_name forms ')';
+
+fn_name: literal;
+
+name_def: '(' 'def' forms ')';
+
 forms: form* ;
 
-list: '(' forms ')' ;
+list:  '(' forms ')' ;
 
 vector: '[' forms ']' ;
 
@@ -103,7 +111,7 @@ lambda
     ;
 
 meta_data
-    : '#^' (map form | form) 
+    : '#^' (map form | form)
     ;
 
 var_quote

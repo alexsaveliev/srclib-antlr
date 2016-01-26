@@ -5,14 +5,13 @@ import com.sourcegraph.toolchain.clojure.antlr4.ClojureParser;
 import com.sourcegraph.toolchain.core.PathUtil;
 import com.sourcegraph.toolchain.core.objects.DefKey;
 import com.sourcegraph.toolchain.language.*;
-import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.apache.commons.io.Charsets;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,12 +68,12 @@ public class LanguageImpl extends LanguageBase {
 
     @Override
     protected FileCollector getFileCollector(File rootDir, String repoUri) {
-        return new ExtensionBasedFileCollector().extension(".swift");
+        return new ExtensionBasedFileCollector().extension(".clj");
     }
 
     @Override
     public String getName() {
-        return "swift";
+        return "clojure";
     }
 
     @Override
@@ -83,62 +82,7 @@ public class LanguageImpl extends LanguageBase {
     }
 
     @Override
-    protected CharStream getCharStream(File sourceFile) throws IOException {
-        Reader r = new PreprocessorCleaner(
-                new InputStreamReader(
-                        new FileInputStream(sourceFile), Charsets.UTF_8));
-        return new ANTLRInputStream(r);
+    public CharStream getCharStream(File sourceFile) throws IOException {
+        return super.getCharStream(sourceFile);
     }
-
-    private static class PreprocessorCleaner extends FilterReader {
-
-        enum STATE {
-            START,
-            REGULAR,
-            EOL,
-            DIRECTIVE
-        }
-
-        private STATE state = STATE.START;
-
-        PreprocessorCleaner(Reader source) {
-            super(source);
-        }
-
-        @Override
-        public int read() throws IOException {
-            int c = super.read();
-            return convert(c);
-        }
-
-        @Override
-        public int read(char cbuf[], int off, int len) throws IOException {
-            int l = super.read(cbuf, off, len);
-            for (int i = 0; i < l; i++) {
-                int pos = off + i;
-                cbuf[pos] = (char) convert(cbuf[pos]);
-            }
-            return l;
-        }
-
-        private int convert(int c) {
-            if (c == -1) {
-                return c;
-            }
-            if (c == '#') {
-                if (state == STATE.START || state == STATE.EOL) {
-                    // preprocessor directive starts
-                    state = STATE.DIRECTIVE;
-                }
-            } else if (c == '\r' || c == '\n') {
-                state = STATE.EOL;
-            } else {
-                if (state == STATE.START || state == STATE.EOL) {
-                    state = STATE.REGULAR;
-                }
-            }
-            return state == STATE.DIRECTIVE ? '/' : c;
-        }
-    }
-
 }
