@@ -36,18 +36,31 @@ file: form *;
 
 form: literal
     | function_def
-    | name_def
+ //   | name_def
     | list
     | vector
     | map
     | reader_macro
     ;
 
-function_def: '(' 'defn' fn_name forms ')';
+function_def: '(' fn_start metadataForm? fn_name docString? '[' arguments last_arguments? ']' forms ')';
+
+fn_start: 'defn'
+        | 'defn-';
 
 fn_name: literal;
 
-name_def: '(' 'def' forms ')';
+metadataForm: metaTag;
+
+metaTag: '^' form;
+
+docString: string;
+
+arguments: forms;
+
+last_arguments: '&' arguments;
+
+//name_def: '(' 'def' forms ')';
 
 forms: form* ;
 
