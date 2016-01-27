@@ -34,19 +34,22 @@ grammar Clojure;
 
 file: form *;
 
-form: literal
+form: function_def
+    | var_def
+    | literal
     | function_def
- //   | name_def
     | list
     | vector
     | map
     | reader_macro
     ;
 
+/* function definitions */
 function_def: '(' fn_start metadataForm? fn_name docString? '[' arguments last_arguments? ']' forms ')';
 
 fn_start: 'defn'
-        | 'defn-';
+        | 'defn-'
+        | 'defmacro';
 
 fn_name: literal;
 
@@ -60,7 +63,14 @@ arguments: forms;
 
 last_arguments: '&' arguments;
 
-//name_def: '(' 'def' forms ')';
+/* variable definitions */
+
+var_def: '(' var_start var_name forms ')';
+
+var_start: 'def'
+         | 'defonce';
+
+var_name: literal;
 
 forms: form* ;
 
