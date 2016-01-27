@@ -51,7 +51,7 @@ fn_start: 'defn'
         | 'defn-'
         | 'defmacro';
 
-fn_name: literal;
+fn_name: symbol;
 
 metadataForm: metaTag;
 
@@ -59,7 +59,11 @@ metaTag: '^' form;
 
 docString: string;
 
-arguments: forms;
+arguments: parameter*;
+
+parameter: metaTag? parameter_name;
+
+parameter_name: symbol;
 
 last_arguments: '&' arguments;
 
@@ -70,7 +74,7 @@ var_def: '(' var_start var_name forms ')';
 var_start: 'def'
          | 'defonce';
 
-var_name: literal;
+var_name: symbol;
 
 forms: form* ;
 
