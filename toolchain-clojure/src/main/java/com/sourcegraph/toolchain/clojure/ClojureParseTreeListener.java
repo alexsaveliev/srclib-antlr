@@ -20,11 +20,15 @@ import java.util.*;
 class ClojureParseTreeListener extends ClojureBaseListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClojureParseTreeListener.class);
-    private static final char PATH_SEPARATOR = '.';
+    private static final char PATH_SEPARATOR = '/';
+    private static final String CLOJURE_DEFAULT_NAMESPACE_NAME = "user";
+
 
     private LanguageImpl support;
 
-    Context<Boolean> context = new Context<>();
+    private String namespace = CLOJURE_DEFAULT_NAMESPACE_NAME ;
+    private Context<Boolean> context = new Context<>();
+    private Map<String, Context<Boolean>> namespaceContexts = new HashMap<>();
 
     private Map<ParserRuleContext, Boolean> defs = new IdentityHashMap<>();
 
@@ -88,6 +92,28 @@ class ClojureParseTreeListener extends ClojureBaseListener {
             return;
         }
 
+        //qualified symbol using namespace
+        if (ctx.ns_symbol() != null) {
+            LOGGER.debug("INSIDE NS SYMBOL = " + ctx.getText());
+            String[] parts = ctx.getText().split("/");
+            String namespace = parts[0];
+            String ident = parts[1];
+            Context<Boolean> context = namespaceContexts.get(namespace);
+
+            LookupResult result = context.lookup(ident);
+            //LOGGER.debug("lookup res = " + result);
+            if (result == null) {
+                return;
+            }
+
+            Ref ref = support.ref(ctx);
+            LOGGER.debug("lookup res = " + result);
+
+            emit(ref, result.getScope().getPathTo(ident, PATH_SEPARATOR));
+            return;
+        }
+
+        //simple symbol using namespace
         String ident = ctx.getText();
         LookupResult result = context.lookup(ident);
         if (result == null) {
@@ -95,7 +121,27 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         }
 
         Ref ref = support.ref(ctx);
+        LOGGER.debug("lookup res = " + result);
         emit(ref, result.getScope().getPathTo(ident, PATH_SEPARATOR));
+    }
+
+    @Override public void enterIn_ns_def(ClojureParser.In_ns_defContext ctx) {
+        ClojureParser.SymbolContext nsName = ctx.symbol();
+
+        //saving current context
+        namespaceContexts.put(namespace, context);
+
+        //getting previously saved context for namespace or creating new one
+        Context<Boolean> savedContext = namespaceContexts.get(nsName.getText());
+        if (savedContext == null) {
+            Context<Boolean> newContext = new Context<>();
+            namespaceContexts.put(nsName.getText(), newContext);
+            LOGGER.debug("INSIDE IN : " + nsName.getText() + " CREATE NEW context");
+            context = newContext;
+        } else {
+            LOGGER.debug("INSIDE IN : " + nsName.getText());
+            context = savedContext;
+        }
     }
 
     private void emit(Def def, String path) {

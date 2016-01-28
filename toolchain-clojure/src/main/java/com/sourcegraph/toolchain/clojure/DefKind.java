@@ -2,7 +2,7 @@ package com.sourcegraph.toolchain.clojure;
 
 interface DefKind {
 
-    public static final String PROTOCOL = "protocol";
+    public static final String NAMESPACE = "namespace";
     public static final String STRUCT = "struct";
     public static final String CLASS = "class";
     public static final String ENUM = "enum";

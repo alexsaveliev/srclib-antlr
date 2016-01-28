@@ -36,6 +36,7 @@ file: form *;
 
 form: function_def
     | var_def
+    | in_ns_def
     | literal
     | function_def
     | list
@@ -75,6 +76,10 @@ var_start: 'def'
          | 'defonce';
 
 var_name: symbol;
+
+/* in-ns namespace def */
+
+in_ns_def: '(' 'in-ns' '\'' symbol ')';
 
 forms: form* ;
 
