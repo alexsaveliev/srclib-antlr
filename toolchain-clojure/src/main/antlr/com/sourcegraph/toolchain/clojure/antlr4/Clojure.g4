@@ -37,8 +37,9 @@ file: form *;
 form: function_def
     | var_def
     | in_ns_def
+    | ns_def
+    | let_form
     | literal
-    | function_def
     | list
     | vector
     | map
@@ -79,7 +80,20 @@ var_name: symbol;
 
 /* in-ns namespace def */
 
-in_ns_def: '(' 'in-ns' '\'' symbol ')';
+in_ns_def: '(' 'in-ns' '\'' ns_name ')';
+
+/* ns simple definition */
+ns_def: '(' 'ns' ns_name ')';
+
+ns_name: symbol;
+
+/* let_form */
+let_form: '(' 'let' '[' bindings ']' forms ')';
+
+bindings: binding* ;
+
+binding: var_name literal //supported case for now
+       | form; //all others, unsupported
 
 forms: form* ;
 

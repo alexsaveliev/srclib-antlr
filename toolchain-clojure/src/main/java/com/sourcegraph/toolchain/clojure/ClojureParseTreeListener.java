@@ -136,6 +136,14 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         saveAndUpdateContext(ctx.ns_name().symbol());
     }
 
+    @Override public void enterLet_form(ClojureParser.Let_formContext ctx) {
+        context.enterScope(context.currentScope().next(PATH_SEPARATOR));
+    }
+
+    @Override public void exitLet_form(ClojureParser.Let_formContext ctx) {
+        context.exitScope();
+    }
+
     private void emit(Def def, String path) {
         if (!support.firstPass) {
             return;
