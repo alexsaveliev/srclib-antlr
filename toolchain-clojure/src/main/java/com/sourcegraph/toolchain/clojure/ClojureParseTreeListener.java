@@ -20,13 +20,16 @@ import java.util.*;
 class ClojureParseTreeListener extends ClojureBaseListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClojureParseTreeListener.class);
-    private static final char PATH_SEPARATOR = '/';
+
+    private static final char PATH_SEPARATOR = '.';
+
+    private static final String NAMESPACE_SEPARATOR = "/";
     private static final String CLOJURE_DEFAULT_NAMESPACE_NAME = "user";
 
 
     private LanguageImpl support;
 
-    private String namespace = CLOJURE_DEFAULT_NAMESPACE_NAME ;
+    private String namespace = CLOJURE_DEFAULT_NAMESPACE_NAME;
     private Context<Boolean> context = new Context<>();
     private Map<String, Context<Boolean>> namespaceContexts = new HashMap<>();
 
@@ -92,28 +95,25 @@ class ClojureParseTreeListener extends ClojureBaseListener {
             return;
         }
 
-        //qualified symbol using namespace
+        //qualified symbol using namespace lookup
         if (ctx.ns_symbol() != null) {
             LOGGER.debug("INSIDE NS SYMBOL = " + ctx.getText());
-            String[] parts = ctx.getText().split("/");
+            String[] parts = ctx.getText().split(NAMESPACE_SEPARATOR);
             String namespace = parts[0];
             String ident = parts[1];
             Context<Boolean> context = namespaceContexts.get(namespace);
 
             LookupResult result = context.lookup(ident);
-            //LOGGER.debug("lookup res = " + result);
             if (result == null) {
                 return;
             }
 
             Ref ref = support.ref(ctx);
-            LOGGER.debug("lookup res = " + result);
-
             emit(ref, result.getScope().getPathTo(ident, PATH_SEPARATOR));
             return;
         }
 
-        //simple symbol using namespace
+        //simple symbol without namespace lookup
         String ident = ctx.getText();
         LookupResult result = context.lookup(ident);
         if (result == null) {
@@ -121,27 +121,19 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         }
 
         Ref ref = support.ref(ctx);
-        LOGGER.debug("lookup res = " + result);
+        //LOGGER.debug("lookup res = " + result);
         emit(ref, result.getScope().getPathTo(ident, PATH_SEPARATOR));
     }
 
-    @Override public void enterIn_ns_def(ClojureParser.In_ns_defContext ctx) {
-        ClojureParser.SymbolContext nsName = ctx.symbol();
 
-        //saving current context
-        namespaceContexts.put(namespace, context);
+    @Override
+    public void enterIn_ns_def(ClojureParser.In_ns_defContext ctx) {
+        saveAndUpdateContext(ctx.ns_name().symbol());
+    }
 
-        //getting previously saved context for namespace or creating new one
-        Context<Boolean> savedContext = namespaceContexts.get(nsName.getText());
-        if (savedContext == null) {
-            Context<Boolean> newContext = new Context<>();
-            namespaceContexts.put(nsName.getText(), newContext);
-            LOGGER.debug("INSIDE IN : " + nsName.getText() + " CREATE NEW context");
-            context = newContext;
-        } else {
-            LOGGER.debug("INSIDE IN : " + nsName.getText());
-            context = savedContext;
-        }
+    @Override
+    public void enterNs_def(ClojureParser.Ns_defContext ctx) {
+        saveAndUpdateContext(ctx.ns_name().symbol());
     }
 
     private void emit(Def def, String path) {
@@ -160,5 +152,24 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         support.emit(ref);
     }
 
-}
+    private void saveAndUpdateContext(ClojureParser.SymbolContext nsNameCtx) {
+        String nsName = nsNameCtx.getText();
 
+        //saving current context
+        namespaceContexts.put(namespace, context);
+
+        //getting previously saved context for namespace or creating new one
+        Context<Boolean> savedContext = namespaceContexts.get(nsName);
+        if (savedContext == null) {
+            Context<Boolean> newContext = new Context<>();
+            LOGGER.debug("INSIDE IN : " + nsName + " CREATE NEW context");
+            namespace = nsName;
+            context = newContext;
+        } else {
+            LOGGER.debug("INSIDE IN : " + nsName);
+            namespace = nsName;
+            context = savedContext;
+        }
+    }
+
+}
