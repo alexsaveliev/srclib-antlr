@@ -22,3 +22,6 @@
 [submodule "testdata/case/antlr-cpp"]
 	path = testdata/case/antlr-cpp
 	url = https://github.com/sgtest/antlr-cpp
+[submodule "testdata/case/antlr-js-prototype"]
+	path = testdata/case/antlr-js-prototype
+	url = https://github.com/sgtest/antlr-js-prototype

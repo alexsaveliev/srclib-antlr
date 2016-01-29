@@ -11,3 +11,5 @@ gen/
 *.iml
 
 testdata/actual/
+
+.DS_Store
