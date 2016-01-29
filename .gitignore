@@ -1,6 +1,7 @@
 .project
 .classpath
 .settings/
+.DS_Store
 
 .bin/*.jar
 build/
@@ -11,5 +12,3 @@ gen/
 *.iml
 
 testdata/actual/
-
-.DS_Store

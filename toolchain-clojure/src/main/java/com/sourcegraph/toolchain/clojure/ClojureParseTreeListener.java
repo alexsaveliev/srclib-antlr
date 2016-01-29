@@ -6,32 +6,31 @@ import com.sourcegraph.toolchain.core.objects.Def;
 import com.sourcegraph.toolchain.core.objects.DefData;
 import com.sourcegraph.toolchain.core.objects.DefKey;
 import com.sourcegraph.toolchain.core.objects.Ref;
-import com.sourcegraph.toolchain.language.Context;
-import com.sourcegraph.toolchain.language.LookupResult;
 import com.sourcegraph.toolchain.language.Scope;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
 
 
 class ClojureParseTreeListener extends ClojureBaseListener {
 
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ClojureParseTreeListener.class);
 
-    private static final char PATH_SEPARATOR = '.';
+    public static final char PATH_SEPARATOR = '.';
 
-    private static final String NAMESPACE_SEPARATOR = "/";
     private static final String CLOJURE_DEFAULT_NAMESPACE_NAME = "user";
-
 
     private LanguageImpl support;
 
-    private String namespace = CLOJURE_DEFAULT_NAMESPACE_NAME;
-    private Context<Boolean> context = new Context<>();
-    private Map<String, Context<Boolean>> namespaceContexts = new HashMap<>();
+    private NamespaceContextResolver nsContextResolver = new NamespaceContextResolver(CLOJURE_DEFAULT_NAMESPACE_NAME);
+
+    //private Context<Boolean> context = new Context<>();
 
     private Map<ParserRuleContext, Boolean> defs = new IdentityHashMap<>();
 
@@ -48,12 +47,12 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         fnDef.format(fnStartKeyword, StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
         fnDef.defData.setKind(fnStartKeyword);
 
-        emit(fnDef, context.currentScope().getPathTo(fnDef.name, PATH_SEPARATOR));
+        emit(fnDef, nsContextResolver.context().currentScope().getPathTo(fnDef.name, PATH_SEPARATOR));
 
-        context.currentScope().put(fnDef.name, true);
+        nsContextResolver.context().currentScope().put(fnDef.name, true);
         defs.put(ctx.fn_name().symbol(), true);
 
-        context.enterScope(new Scope<>(nameCtx.getText(), context.currentScope().getPrefix()));
+        nsContextResolver.context().enterScope(new Scope<>(nameCtx.getText(), nsContextResolver.context().currentScope().getPrefix()));
 
         List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
         for (ClojureParser.ParameterContext param : params) {
@@ -61,16 +60,16 @@ class ClojureParseTreeListener extends ClojureBaseListener {
             paramDef.format("param", StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
             paramDef.defData.setKind("param");
 
-            emit(paramDef, context.currentScope().getPathTo(paramDef.name, PATH_SEPARATOR));
+            emit(paramDef, nsContextResolver.context().currentScope().getPathTo(paramDef.name, PATH_SEPARATOR));
 
-            context.currentScope().put(param.parameter_name().getText(), true);
+            nsContextResolver.context().currentScope().put(param.parameter_name().getText(), true);
             defs.put(param.parameter_name().symbol(), true);
         }
     }
 
     @Override
     public void exitFunction_def(ClojureParser.Function_defContext ctx) {
-        context.exitScope();
+        nsContextResolver.context().exitScope();
     }
 
     @Override
@@ -82,9 +81,9 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         varDef.format(varStartKeyword, StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
         varDef.defData.setKind(varStartKeyword);
 
-        emit(varDef, context.currentScope().getPathTo(varDef.name, PATH_SEPARATOR));
+        emit(varDef, nsContextResolver.context().currentScope().getPathTo(varDef.name, PATH_SEPARATOR));
 
-        context.currentScope().put(varDef.name, true);
+        nsContextResolver.context().currentScope().put(varDef.name, true);
         defs.put(ctx.var_name().symbol(), true);
     }
 
@@ -95,53 +94,78 @@ class ClojureParseTreeListener extends ClojureBaseListener {
             return;
         }
 
-        //qualified symbol using namespace lookup
-        if (ctx.ns_symbol() != null) {
-            LOGGER.debug("INSIDE NS SYMBOL = " + ctx.getText());
-            String[] parts = ctx.getText().split(NAMESPACE_SEPARATOR);
-            String namespace = parts[0];
-            String ident = parts[1];
-            Context<Boolean> context = namespaceContexts.get(namespace);
-
-            LookupResult result = context.lookup(ident);
-            if (result == null) {
-                return;
-            }
-
-            Ref ref = support.ref(ctx);
-            emit(ref, result.getScope().getPathTo(ident, PATH_SEPARATOR));
-            return;
-        }
-
-        //simple symbol without namespace lookup
-        String ident = ctx.getText();
-        LookupResult result = context.lookup(ident);
-        if (result == null) {
+        String pathRes = nsContextResolver.lookup(ctx);
+        if (pathRes == null) {
             return;
         }
 
         Ref ref = support.ref(ctx);
         //LOGGER.debug("lookup res = " + result);
-        emit(ref, result.getScope().getPathTo(ident, PATH_SEPARATOR));
+        emit(ref, pathRes);
     }
-
 
     @Override
     public void enterIn_ns_def(ClojureParser.In_ns_defContext ctx) {
-        saveAndUpdateContext(ctx.ns_name().symbol());
+        nsContextResolver.enterNamespace(ctx.ns_name().getText());
     }
 
     @Override
     public void enterNs_def(ClojureParser.Ns_defContext ctx) {
-        saveAndUpdateContext(ctx.ns_name().symbol());
+        String nsName = ctx.ns_name().getText();
+
+        nsContextResolver.enterNamespace(nsName);
+
+        List<ClojureParser.ReferenceContext> refs = ctx.references().reference();
+        for (ClojureParser.ReferenceContext ref : refs) {
+            if (ref.use_reference() != null) {
+                List<ClojureParser.Ref_entityContext> refEnts = ref.use_reference().ref_entities().ref_entity();
+                for (ClojureParser.Ref_entityContext refEnt : refEnts) {
+                    if (refEnt.symbol() != null) {
+
+
+                    } else {
+                        LOGGER.warn("UNSUPPORTED entity = " + refEnt.getText() + "IN NS :USE REFERENCE");
+                    }
+                }
+
+            } else if (ref.require_reference() != null) {
+                LOGGER.warn(":REQUIRE REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
+
+            } else if (ref.import_reference() != null) {
+                LOGGER.warn(":IMPORT REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
+
+            } else if (ref.other_reference() != null) {
+                LOGGER.warn("REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
+            }
+        }
+
     }
 
-    @Override public void enterLet_form(ClojureParser.Let_formContext ctx) {
-        context.enterScope(context.currentScope().next(PATH_SEPARATOR));
+    @Override
+    public void enterLet_form(ClojureParser.Let_formContext ctx) {
+        nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next(PATH_SEPARATOR));
+
+        List<ClojureParser.BindingContext> bindingsCtx = ctx.bindings().binding();
+        for (ClojureParser.BindingContext bindingCtx : bindingsCtx) {
+            if (bindingCtx.var_name() != null) {
+
+                Def letvarDef = support.def(bindingCtx.var_name(), DefKind.LETVAR);
+                letvarDef.format("letvar", StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
+                letvarDef.defData.setKind("letvar");
+
+                emit(letvarDef, nsContextResolver.context().currentScope().getPathTo(letvarDef.name, PATH_SEPARATOR));
+
+                nsContextResolver.context().currentScope().put(bindingCtx.var_name().getText(), true);
+                defs.put(bindingCtx.var_name().symbol(), true);
+            } else {
+                LOGGER.warn("UNSUPPORTED BINDING FORM = " + bindingCtx.getText() + "FOR LET DEFINITION = " + ctx.getText() + " WAS FOUND");
+            }
+        }
     }
 
-    @Override public void exitLet_form(ClojureParser.Let_formContext ctx) {
-        context.exitScope();
+    @Override
+    public void exitLet_form(ClojureParser.Let_formContext ctx) {
+        nsContextResolver.context().exitScope();
     }
 
     private void emit(Def def, String path) {
@@ -160,24 +184,5 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         support.emit(ref);
     }
 
-    private void saveAndUpdateContext(ClojureParser.SymbolContext nsNameCtx) {
-        String nsName = nsNameCtx.getText();
-
-        //saving current context
-        namespaceContexts.put(namespace, context);
-
-        //getting previously saved context for namespace or creating new one
-        Context<Boolean> savedContext = namespaceContexts.get(nsName);
-        if (savedContext == null) {
-            Context<Boolean> newContext = new Context<>();
-            LOGGER.debug("INSIDE IN : " + nsName + " CREATE NEW context");
-            namespace = nsName;
-            context = newContext;
-        } else {
-            LOGGER.debug("INSIDE IN : " + nsName);
-            namespace = nsName;
-            context = savedContext;
-        }
-    }
 
 }

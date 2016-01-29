@@ -47,7 +47,7 @@ form: function_def
     ;
 
 /* function definitions */
-function_def: '(' fn_start metadataForm? fn_name docString? '[' arguments last_arguments? ']' forms ')';
+function_def: '(' fn_start metadata_form? fn_name docstring? '[' arguments last_arguments? ']' forms ')';
 
 fn_start: 'defn'
         | 'defn-'
@@ -55,15 +55,15 @@ fn_start: 'defn'
 
 fn_name: symbol;
 
-metadataForm: metaTag;
+metadata_form: meta_tag;
 
-metaTag: '^' form;
+meta_tag: '^' form;
 
-docString: string;
+docstring: string;
 
 arguments: parameter*;
 
-parameter: metaTag? parameter_name;
+parameter: meta_tag? parameter_name;
 
 parameter_name: symbol;
 
@@ -83,17 +83,49 @@ var_name: symbol;
 in_ns_def: '(' 'in-ns' '\'' ns_name ')';
 
 /* ns simple definition */
-ns_def: '(' 'ns' ns_name ')';
+ns_def: '(' 'ns' ns_name docstring? attr_map? references ')';
 
 ns_name: symbol;
+
+attr_map: map;
+
+references: reference*;
+
+reference: require_reference
+         | use_reference
+         | import_reference
+         | other_reference
+         ;
+
+require_reference: '(' ':require' ref_entities ')';
+
+use_reference: '(' ':use' ref_entities ')';
+
+import_reference: '(' ':import' ref_entities ')';
+
+other_reference: '(' keyword forms ')'; // unsupported for now cases
+
+ref_entities: ref_entity*;
+
+ref_entity: ref_keyword // unsupported for now cases
+          | list // unsupported for now cases
+          | symbol
+          | ref_vector // unsupported for now cases
+          ;
+
+ref_keyword: keyword;
+ref_vector: vector;
 
 /* let_form */
 let_form: '(' 'let' '[' bindings ']' forms ')';
 
 bindings: binding* ;
 
-binding: var_name literal //supported case for now
-       | form; //all others, unsupported
+//binding: var_name form #var_form_binding //supported case for now
+//       | form #formbinding; //all others, unsupported
+
+binding: var_name form //supported case for now
+       | form;  //all others, unsupported
 
 forms: form* ;
 
