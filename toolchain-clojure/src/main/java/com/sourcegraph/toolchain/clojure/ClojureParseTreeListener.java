@@ -117,13 +117,11 @@ class ClojureParseTreeListener extends ClojureBaseListener {
                 List<ClojureParser.Ref_entityContext> refEnts = ref.use_reference().ref_entities().ref_entity();
                 for (ClojureParser.Ref_entityContext refEnt : refEnts) {
                     if (refEnt.symbol() != null) {
-
-
+                        nsContextResolver.addUsedNamespace(refEnt.getText());
                     } else {
                         LOGGER.warn("UNSUPPORTED entity = " + refEnt.getText() + "IN NS :USE REFERENCE");
                     }
                 }
-
             } else if (ref.require_reference() != null) {
                 LOGGER.warn(":REQUIRE REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
 
@@ -134,7 +132,6 @@ class ClojureParseTreeListener extends ClojureBaseListener {
                 LOGGER.warn("REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
             }
         }
-
     }
 
     @Override
@@ -168,7 +165,7 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         if (!support.firstPass) {
             return;
         }
-        String pathWithNs = nsContextResolver.currentNamespace() + nsContextResolver.NAMESPACE_SEPARATOR + path;
+        String pathWithNs = nsContextResolver.currentNamespaceName() + nsContextResolver.NAMESPACE_SEPARATOR + path;
         def.defKey = new DefKey(null, pathWithNs);
         support.emit(def);
     }

@@ -69,8 +69,12 @@ public class NamespaceContextResolver {
         return currentNamespace.lookup(fullName);
     }
 
-    public String currentNamespace() {
+    public String currentNamespaceName() {
         return currentNamespace.getName();
+    }
+
+    public void addUsedNamespace(String namespace) {
+        currentNamespace.addUsedNamespace(namespace);
     }
 
 }

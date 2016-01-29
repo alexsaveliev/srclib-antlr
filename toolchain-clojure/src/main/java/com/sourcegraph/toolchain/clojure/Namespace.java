@@ -44,14 +44,16 @@ public class Namespace {
         return null;
     }
 
-
-
     public String getName() {
         return name;
     }
 
     public Context<Boolean> getContext() {
         return context;
+    }
+
+    public void addUsedNamespace(String namespace) {
+        usedNsNames.add(namespace);
     }
 
     @Override
