@@ -1,0 +1,34 @@
+{
+  "Defs": [
+    {
+      "Path": "1.c",
+      "Name": "c",
+      "Kind": "letvar",
+      "File": "test.clj",
+      "DefStart": 200,
+      "DefEnd": 201,
+      "Data": {
+        "Type": "",
+        "Keyword": "letvar",
+        "Kind": "letvar",
+        "Separator": ""
+      },
+      "TreePath": "1.c"
+    }
+  ],
+  "Refs": [
+    {
+      "DefPath": "1.c",
+      "Def": true,
+      "File": "test.clj",
+      "Start": 200,
+      "End": 201
+    },
+    {
+      "DefPath": "1.c",
+      "File": "test.clj",
+      "Start": 261,
+      "End": 262
+    }
+  ]
+}
