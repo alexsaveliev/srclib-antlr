@@ -24,13 +24,9 @@ class ClojureParseTreeListener extends ClojureBaseListener {
 
     public static final char PATH_SEPARATOR = '.';
 
-    private static final String CLOJURE_DEFAULT_NAMESPACE_NAME = "user";
-
     private LanguageImpl support;
 
-    private NamespaceContextResolver nsContextResolver = new NamespaceContextResolver(CLOJURE_DEFAULT_NAMESPACE_NAME);
-
-    //private Context<Boolean> context = new Context<>();
+    private NamespaceContextResolver nsContextResolver =  NamespaceContextResolver.getInstance();
 
     private Map<ParserRuleContext, Boolean> defs = new IdentityHashMap<>();
 
@@ -172,7 +168,8 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         if (!support.firstPass) {
             return;
         }
-        def.defKey = new DefKey(null, path);
+        String pathWithNs = nsContextResolver.currentNamespace() + nsContextResolver.NAMESPACE_SEPARATOR + path;
+        def.defKey = new DefKey(null, pathWithNs);
         support.emit(def);
     }
 
@@ -183,6 +180,4 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         ref.defKey = new DefKey(null, path);
         support.emit(ref);
     }
-
-
 }
