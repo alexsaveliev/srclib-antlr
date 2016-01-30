@@ -14,7 +14,8 @@
 
    https://github.com/laurentpetit/ccw/tree/master/clojure-antlr-grammar
 
-   Regardless, there are some issues perhaps related to "sugar";
+   Regardless, there are so
+   me issues perhaps related to "sugar";
    I've tried to fix them.
 
    This parses https://github.com/weavejester/compojure project.
@@ -32,13 +33,13 @@ grammar Clojure;
     package com.sourcegraph.toolchain.clojure.antlr4;
 }
 
-file: form *;
+file: form*;
 
 form: function_def
-    | var_def
-    | in_ns_def
-    | ns_def
-    | let_form
+    //| var_def
+   // | in_ns_def
+    //| ns_def
+    //| let_form
     | literal
     | list
     | vector
@@ -47,7 +48,15 @@ form: function_def
     ;
 
 /* function definitions */
-function_def: '(' fn_start metadata_form? fn_name docstring? '[' arguments last_arguments? ']' forms ')';
+//function_def: '(' fn_start metadata_form? fn_name docstring? '[' arguments last_arguments? ']' forms ')';
+
+function_def: '(' fn_start fn_name docstring? attr_map? '[' attr_map? arguments last_arguments? ']' prepost_map?  fn_body ')' #simple_fn
+            | '(' fn_start fn_name docstring? attr_map? ('[' attr_map? arguments last_arguments? ']' prepost_map?  fn_body)+ attr_map? ')' #multi_fn_def
+            | '(' fn_start fn_name forms ')' #undefined_fn_with_name
+            | '(' fn_start forms ')' #undefined_fn
+            ;
+
+//fn_start: 'defn';
 
 fn_start: 'defn'
         | 'defn-'
@@ -55,11 +64,11 @@ fn_start: 'defn'
 
 fn_name: symbol;
 
-metadata_form: meta_tag;
+docstring: string;
+
+//metadata_form: meta_tag;
 
 meta_tag: '^' form;
-
-docstring: string;
 
 arguments: parameter*;
 
@@ -67,65 +76,72 @@ parameter: meta_tag? parameter_name;
 
 parameter_name: symbol;
 
-last_arguments: '&' arguments;
-
-/* variable definitions */
-
-var_def: '(' var_start var_name forms ')';
-
-var_start: 'def'
-         | 'defonce';
-
-var_name: symbol;
-
-/* in-ns namespace def */
-
-in_ns_def: '(' 'in-ns' '\'' ns_name ')';
-
-/* ns simple definition */
-ns_def: '(' 'ns' ns_name docstring? attr_map? references ')';
-
-ns_name: symbol;
+last_arguments: '&' '[' symbol ']'
+              | '&' symbol;
 
 attr_map: map;
 
-references: reference*;
+prepost_map: map;
 
-reference: require_reference
-         | use_reference
-         | import_reference
-         | other_reference
-         ;
+fn_body: forms;
 
-require_reference: '(' ':require' ref_entities ')';
+/* variable definitions */
 
-use_reference: '(' ':use' ref_entities ')';
+//var_def: '(' var_start var_name forms ')';
+//
+//var_start: 'def'
+//         | 'defonce';
+//
+//var_name: symbol;
 
-import_reference: '(' ':import' ref_entities ')';
+/* in-ns namespace def */
 
-other_reference: '(' keyword forms ')'; // unsupported for now cases
+//in_ns_def: '(' 'in-ns' '\'' ns_name ')';
 
-ref_entities: ref_entity*;
-
-ref_entity: ref_keyword // unsupported for now cases
-          | list // unsupported for now cases
-          | symbol
-          | ref_vector // unsupported for now cases
-          ;
-
-ref_keyword: keyword;
-ref_vector: vector;
+/* ns simple definition */
+//ns_def: '(' 'ns' ns_name docstring? attr_map? references ')';
+//
+//ns_name: symbol;
+//
+//attr_map: map;
+//
+//references: reference*;
+//
+//reference: require_reference
+//         | use_reference
+//         | import_reference
+//         | other_reference
+//         ;
+//
+//require_reference: '(' ':require' ref_entities ')';
+//
+//use_reference: '(' ':use' ref_entities ')';
+//
+//import_reference: '(' ':import' ref_entities ')';
+//
+//other_reference: '(' keyword forms ')'; // unsupported for now cases
+//
+//ref_entities: ref_entity*;
+//
+//ref_entity: ref_keyword // unsupported for now cases
+//          | list // unsupported for now cases
+//          | symbol
+//          | ref_vector // unsupported for now cases
+//          ;
+//
+//ref_keyword: keyword;
+//ref_vector: vector;
 
 /* let_form */
-let_form: '(' 'let' '[' bindings ']' forms ')';
-
-bindings: binding* ;
+//let_form: '(' 'let' '[' bindings ']' forms ')';
+//
+//bindings: binding* ;
 
 //binding: var_name form #var_form_binding //supported case for now
 //       | form #formbinding; //all others, unsupported
 
-binding: var_name form //supported case for now
-       | form;  //all others, unsupported
+//binding: var_name form //supported case for now
+//       | form;  //all others, unsupported
 
 forms: form* ;
 
@@ -153,6 +169,7 @@ reader_macro
     | unquote
     | unquote_splicing
     | gensym
+    | rest
     ;
 
 // TJP added '&' (gather a variable number of arguments)
@@ -210,6 +227,10 @@ dispatch
 
 regex
     : '#' string
+    ;
+
+rest
+    : '&' form
     ;
 
 literal
@@ -317,7 +338,7 @@ NS_SYMBOL
     : NAME '/' SYMBOL
     ;
 
-PARAM_NAME: '%' ((('1'..'9')('0'..'9')*)|'&')? ;
+PARAM_NAME: '%' ((('1'..'9')('0'..'9')*)|'&')?;
 
 // Fragments
 //--------------------------------------------------------------------
@@ -328,7 +349,7 @@ NAME: SYMBOL_HEAD SYMBOL_REST* (':' SYMBOL_REST+)* ;
 fragment
 SYMBOL_HEAD
     : ~('0' .. '9'
-        | '^' | '`' | '\'' | '"' | '#' | '~' | '@' | ':' | '/' | '%' | '(' | ')' | '[' | ']' | '{' | '}' // FIXME: could be one group
+        | '^' | '`' | '\'' | '"' | '#' | '~' | '@' | ':' | '/' | '%' | '(' | ')' | '[' | ']' | '{' | '}' | '&'  // FIXME: could be one group
         | [ \n\r\t\,] // FIXME: could be WS
         )
     ;
