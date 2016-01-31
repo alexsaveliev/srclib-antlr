@@ -36,10 +36,10 @@ grammar Clojure;
 file: form*;
 
 form: function_def
-    //| var_def
-   // | in_ns_def
-    //| ns_def
-    //| let_form
+    | var_def
+    | in_ns_def
+    | ns_def
+    | let_form
     | literal
     | list
     | vector
@@ -56,8 +56,6 @@ function_def: '(' fn_start fn_name docstring? attr_map? '[' attr_map? arguments 
             | '(' fn_start forms ')' #undefined_fn
             ;
 
-//fn_start: 'defn';
-
 fn_start: 'defn'
         | 'defn-'
         | 'defmacro';
@@ -66,7 +64,7 @@ fn_name: symbol;
 
 docstring: string;
 
-//metadata_form: meta_tag;
+metadata_form: meta_tag;
 
 meta_tag: '^' form;
 
@@ -87,58 +85,66 @@ fn_body: forms;
 
 /* variable definitions */
 
-//var_def: '(' var_start var_name forms ')';
-//
-//var_start: 'def'
-//         | 'defonce';
-//
-//var_name: symbol;
+var_def: '(' var_start metadata_form? var_name docstring? init? ')' #simple_var_def
+       | '(' var_start metadata_form? var_name forms ')' #undefined_var_def
+       | '(' var_start forms ')' #undefined_var_with_name_def
+       ;
+
+var_start: 'def'
+         | 'defonce';
+
+var_name: symbol;
+
+init: form;
 
 /* in-ns namespace def */
 
-//in_ns_def: '(' 'in-ns' '\'' ns_name ')';
+in_ns_def: '(' 'in-ns ' '\'' ns_name ')' #simple_in_ns_def
+         | '(' 'in-ns ' forms ')' #undefined_in_ns_def
+         ;
+
+ns_name: symbol;
 
 /* ns simple definition */
-//ns_def: '(' 'ns' ns_name docstring? attr_map? references ')';
-//
-//ns_name: symbol;
-//
-//attr_map: map;
-//
-//references: reference*;
-//
-//reference: require_reference
-//         | use_reference
-//         | import_reference
-//         | other_reference
-//         ;
-//
-//require_reference: '(' ':require' ref_entities ')';
-//
-//use_reference: '(' ':use' ref_entities ')';
-//
-//import_reference: '(' ':import' ref_entities ')';
-//
-//other_reference: '(' keyword forms ')'; // unsupported for now cases
-//
-//ref_entities: ref_entity*;
-//
-//ref_entity: ref_keyword // unsupported for now cases
-//          | list // unsupported for now cases
-//          | symbol
-//          | ref_vector // unsupported for now cases
-//          ;
-//
-//ref_keyword: keyword;
-//ref_vector: vector;
+ns_def: '(' 'ns' metadata_form? ns_name docstring? attr_map? references ')'
+      | '(' 'ns' metadata_form? ns_name forms ')'
+      | '(' 'ns' forms ')'
+      ;
+
+references: reference*;
+
+reference: require_reference
+         |  use_reference
+         | import_reference
+         | other_reference
+         ;
+
+require_reference: '(' ':require' ref_entities ')';
+
+use_reference: '(' ':use' ref_entities ')';
+
+import_reference: '(' ':import' ref_entities ')';
+
+other_reference: '(' keyword forms ')'; // unsupported for now cases
+
+ref_entities: ref_entity*;
+
+ref_entity: ref_keyword // unsupported for now cases
+          | list // unsupported for now cases
+          | symbol
+          | ref_vector // unsupported for now cases
+          ;
+
+ref_keyword: keyword;
+ref_vector: vector;
 
 /* let_form */
-//let_form: '(' 'let' '[' bindings ']' forms ')';
-//
-//bindings: binding* ;
+let_form: '(' 'let' '[' bindings ']' forms ')';
 
-//binding: var_name form #var_form_binding //supported case for now
-//       | form #formbinding; //all others, unsupported
+bindings: binding* ;
+
+binding: var_name form #var_form_binding //supported case for now
+       | form #formbinding; //all others, unsupported
 
 //binding: var_name form //supported case for now
 //       | form;  //all others, unsupported
@@ -268,7 +274,22 @@ u_hex_quad: CHAR_U ;
 nil: NIL;
 
 keyword: macro_keyword | simple_keyword;
-simple_keyword: ':' symbol;
+
+/*modififed to parse symbols which match with keywords - check whether it's right*/
+simple_keyword: ':' symbol
+              | 'ns'
+              | ':ns'
+              | 'ns#'
+              | ':use'
+              | ':user'
+              | ':user_id'
+              | ':username'
+              | ':import'
+              | ':require'
+              | ':requires'
+              | 'let'
+              | ':let'
+              ;
 macro_keyword: ':' ':' symbol;
 
 symbol: ns_symbol | simple_sym;
