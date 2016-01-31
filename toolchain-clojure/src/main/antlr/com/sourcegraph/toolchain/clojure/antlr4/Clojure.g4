@@ -50,9 +50,9 @@ form: function_def
 /* function definitions */
 //function_def: '(' fn_start metadata_form? fn_name docstring? '[' arguments last_arguments? ']' forms ')';
 
-function_def: '(' fn_start fn_name docstring? attr_map? '[' attr_map? arguments last_arguments? ']' prepost_map?  fn_body ')' #simple_fn
-            | '(' fn_start fn_name docstring? attr_map? ('[' attr_map? arguments last_arguments? ']' prepost_map?  fn_body)+ attr_map? ')' #multi_fn_def
-            | '(' fn_start fn_name forms ')' #undefined_fn_with_name
+function_def: '(' fn_start metadata_form? fn_name docstring? attr_map? '[' attr_map? arguments last_arguments? ']' prepost_map?  fn_body ')' #simple_fn_def
+            | '(' fn_start metadata_form? fn_name docstring? attr_map? fn_bindings attr_map? ')'  #multi_fn_def
+            | '(' fn_start metadata_form? fn_name forms ')' #undefined_fn_with_name
             | '(' fn_start forms ')' #undefined_fn
             ;
 
@@ -68,14 +68,20 @@ metadata_form: meta_tag;
 
 meta_tag: '^' form;
 
+fn_binding: '[' attr_map? arguments']' prepost_map?  fn_body;
+
+fn_bindings: ('(' fn_binding ')')+;
+
 arguments: parameter*;
 
 parameter: meta_tag? parameter_name;
 
 parameter_name: symbol;
 
-last_arguments: '&' '[' symbol ']'
-              | '&' symbol;
+last_arguments: '&' '[' parameters ']'
+              | '&' parameters
+              ;
+parameters: parameter+;
 
 attr_map: map;
 
@@ -86,8 +92,7 @@ fn_body: forms;
 /* variable definitions */
 
 var_def: '(' var_start metadata_form? var_name docstring? init? ')' #simple_var_def
-       | '(' var_start metadata_form? var_name forms ')' #undefined_var_def
-       | '(' var_start forms ')' #undefined_var_with_name_def
+       | '(' var_start forms ')' #undefined_var_def
        ;
 
 var_start: 'def'

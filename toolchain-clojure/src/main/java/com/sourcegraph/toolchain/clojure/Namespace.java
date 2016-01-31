@@ -40,7 +40,7 @@ public class Namespace {
                 return res;
             }
         }
-        LOGGER.warn("NAME = " + fullName + " WAS NOT FOUND IN NS: " + name);
+        //LOGGER.warn("NAME = " + fullName + " WAS NOT FOUND IN NS: " + name);
         return null;
     }
 
