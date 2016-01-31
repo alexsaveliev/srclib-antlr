@@ -152,11 +152,15 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         //LOGGER.debug("lookup res = " + result);
         emit(ref, pathRes);
     }
-//
-//    @Override
-//    public void enterIn_ns_def(ClojureParser.In_ns_defContext ctx) {
-//        nsContextResolver.enterNamespace(ctx.ns_name().getText());
-//    }
+
+    @Override public void enterSimple_in_ns_def(ClojureParser.Simple_in_ns_defContext ctx) {
+        nsContextResolver.enterNamespace(ctx.ns_name().getText());
+    }
+
+    @Override public void enterUndefined_in_ns_def(ClojureParser.Undefined_in_ns_defContext ctx) {
+        LOGGER.warn("UNDEFINED NAMESPACE {} WAS FOUND, unable to process it", ctx.getText());
+    }
+
 //
 //    @Override
 //    public void enterNs_def(ClojureParser.Ns_defContext ctx) {
