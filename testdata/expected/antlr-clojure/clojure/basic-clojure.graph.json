@@ -136,6 +136,81 @@
       "TreePath": "ns2/var3"
     },
     {
+      "Path": "user/1.1.a",
+      "Name": "a",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 10,
+      "DefEnd": 11,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/1.1.a"
+    },
+    {
+      "Path": "user/1.1.b",
+      "Name": "b",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 12,
+      "DefEnd": 13,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/1.1.b"
+    },
+    {
+      "Path": "user/1.2.x",
+      "Name": "x",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 34,
+      "DefEnd": 35,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/1.2.x"
+    },
+    {
+      "Path": "user/1.2.y",
+      "Name": "y",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 36,
+      "DefEnd": 37,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/1.2.y"
+    },
+    {
+      "Path": "user/1.2.z",
+      "Name": "z",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 38,
+      "DefEnd": 39,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/1.2.z"
+    },
+    {
       "Path": "user/1.x",
       "Name": "x",
       "Kind": "letvar",
@@ -149,6 +224,36 @@
         "Separator": ""
       },
       "TreePath": "user/1.x"
+    },
+    {
+      "Path": "user/2.c",
+      "Name": "c",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 59,
+      "DefEnd": 60,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/2.c"
+    },
+    {
+      "Path": "user/2.d",
+      "Name": "d",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 61,
+      "DefEnd": 62,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/2.d"
     },
     {
       "Path": "user/2.y",
@@ -196,6 +301,21 @@
       "TreePath": "user/3.b"
     },
     {
+      "Path": "user/3.c",
+      "Name": "c",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 143,
+      "DefEnd": 144,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/3.c"
+    },
+    {
       "Path": "user/4.c",
       "Name": "c",
       "Kind": "letvar",
@@ -209,6 +329,96 @@
         "Separator": ""
       },
       "TreePath": "user/4.c"
+    },
+    {
+      "Path": "user/4.nums",
+      "Name": "nums",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 173,
+      "DefEnd": 177,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/4.nums"
+    },
+    {
+      "Path": "user/5.int",
+      "Name": "int",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 228,
+      "DefEnd": 231,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/5.int"
+    },
+    {
+      "Path": "user/5.nums",
+      "Name": "nums",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 234,
+      "DefEnd": 238,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/5.nums"
+    },
+    {
+      "Path": "user/6.1.a",
+      "Name": "a",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 301,
+      "DefEnd": 302,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/6.1.a"
+    },
+    {
+      "Path": "user/6.2.a",
+      "Name": "a",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 315,
+      "DefEnd": 316,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/6.2.a"
+    },
+    {
+      "Path": "user/6.2.b",
+      "Name": "b",
+      "Kind": "param",
+      "File": "fn-tests/anonym-fn.clj",
+      "DefStart": 317,
+      "DefEnd": 318,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/6.2.b"
     },
     {
       "Path": "user/bar",
@@ -594,6 +804,71 @@
       "End": 78
     },
     {
+      "DefPath": "user/1.1.a",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 10,
+      "End": 11
+    },
+    {
+      "DefPath": "user/1.1.a",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 18,
+      "End": 19
+    },
+    {
+      "DefPath": "user/1.1.b",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 12,
+      "End": 13
+    },
+    {
+      "DefPath": "user/1.1.b",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 20,
+      "End": 21
+    },
+    {
+      "DefPath": "user/1.2.x",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 34,
+      "End": 35
+    },
+    {
+      "DefPath": "user/1.2.x",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 44,
+      "End": 45
+    },
+    {
+      "DefPath": "user/1.2.y",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 36,
+      "End": 37
+    },
+    {
+      "DefPath": "user/1.2.y",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 46,
+      "End": 47
+    },
+    {
+      "DefPath": "user/1.2.z",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 38,
+      "End": 39
+    },
+    {
+      "DefPath": "user/1.2.z",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 48,
+      "End": 49
+    },
+    {
       "DefPath": "user/1.x",
       "File": "let-tests/let-simple.clj",
       "Start": 17,
@@ -605,6 +880,32 @@
       "File": "let-tests/let-simple.clj",
       "Start": 6,
       "End": 7
+    },
+    {
+      "DefPath": "user/2.c",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 59,
+      "End": 60
+    },
+    {
+      "DefPath": "user/2.c",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 67,
+      "End": 68
+    },
+    {
+      "DefPath": "user/2.d",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 61,
+      "End": 62
+    },
+    {
+      "DefPath": "user/2.d",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 69,
+      "End": 70
     },
     {
       "DefPath": "user/2.y",
@@ -622,6 +923,19 @@
     {
       "DefPath": "user/3.a",
       "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 139,
+      "End": 140
+    },
+    {
+      "DefPath": "user/3.a",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 149,
+      "End": 150
+    },
+    {
+      "DefPath": "user/3.a",
+      "Def": true,
       "File": "let-tests/let-simple.clj",
       "Start": 48,
       "End": 49
@@ -631,6 +945,19 @@
       "File": "let-tests/let-simple.clj",
       "Start": 70,
       "End": 71
+    },
+    {
+      "DefPath": "user/3.b",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 141,
+      "End": 142
+    },
+    {
+      "DefPath": "user/3.b",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 151,
+      "End": 152
     },
     {
       "DefPath": "user/3.b",
@@ -646,6 +973,19 @@
       "End": 73
     },
     {
+      "DefPath": "user/3.c",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 143,
+      "End": 144
+    },
+    {
+      "DefPath": "user/3.c",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 153,
+      "End": 154
+    },
+    {
       "DefPath": "user/4.c",
       "File": "let-tests/let-simple.clj",
       "Start": 144,
@@ -657,6 +997,96 @@
       "File": "let-tests/let-simple.clj",
       "Start": 83,
       "End": 84
+    },
+    {
+      "DefPath": "user/4.nums",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 173,
+      "End": 177
+    },
+    {
+      "DefPath": "user/4.nums",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 191,
+      "End": 195
+    },
+    {
+      "DefPath": "user/4.nums",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 204,
+      "End": 208
+    },
+    {
+      "DefPath": "user/5.int",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 228,
+      "End": 231
+    },
+    {
+      "DefPath": "user/5.int",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 243,
+      "End": 246
+    },
+    {
+      "DefPath": "user/5.nums",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 234,
+      "End": 238
+    },
+    {
+      "DefPath": "user/5.nums",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 259,
+      "End": 263
+    },
+    {
+      "DefPath": "user/5.nums",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 272,
+      "End": 276
+    },
+    {
+      "DefPath": "user/6.1.a",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 301,
+      "End": 302
+    },
+    {
+      "DefPath": "user/6.1.a",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 309,
+      "End": 310
+    },
+    {
+      "DefPath": "user/6.2.a",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 315,
+      "End": 316
+    },
+    {
+      "DefPath": "user/6.2.a",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 323,
+      "End": 324
+    },
+    {
+      "DefPath": "user/6.2.b",
+      "Def": true,
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 317,
+      "End": 318
+    },
+    {
+      "DefPath": "user/6.2.b",
+      "File": "fn-tests/anonym-fn.clj",
+      "Start": 325,
+      "End": 326
     },
     {
       "DefPath": "user/bar.1.a",
