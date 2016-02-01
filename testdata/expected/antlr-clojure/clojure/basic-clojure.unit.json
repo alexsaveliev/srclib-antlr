@@ -1,1 +1,1 @@
-{"Name":"clojure","Type":"basic-clojure","Files":["test.clj"],"Data":{}}
+{"Name":"clojure","Type":"basic-clojure","Files":["fn-tests/fn-last-args.clj","fn-tests/fn-multiple-let.clj","fn-tests/fn-simple.clj","ns-tests/in-ns.clj","ns-tests/ns-simple.clj","vars-tests/var-simple.clj"],"Data":{}}
