@@ -169,8 +169,8 @@ bindings: binding* ;
 //binding: var_name form #var_form_binding //supported case for now
 //       | form #form_binding; //all others, unsupported
 
-binding: var_name form
-       | form
+binding: var_name form #simple_binding
+       | form #undefined_binding
        ;
 
 forms: form* ;

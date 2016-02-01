@@ -8,7 +8,7 @@ interface DefKind {
     public static final String ENUM = "enum";
     public static final String FUNC = "func";
     public static final String PARAM = "param";
-    public static final String LETVAR = "letvar";
+    public static final String BINDING_VAR = "binding_var";
     public static final String VAR = "var";
     public static final String CASE = "case";
 }
