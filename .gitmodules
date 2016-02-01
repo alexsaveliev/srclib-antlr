@@ -28,3 +28,6 @@
 [submodule "testdata/case/antlr-clojure"]
 	path = testdata/case/antlr-clojure
 	url = https://github.com/sgtest/antlr-clojure.git
+[submodule "antlr-clojure"]
+	path = antlr-clojure
+	url = https://github.com/sgtest/antlr-clojure

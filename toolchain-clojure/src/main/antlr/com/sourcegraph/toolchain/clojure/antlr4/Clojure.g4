@@ -111,26 +111,28 @@ in_ns_def: '(' 'in-ns ' '\'' ns_name ')' #simple_in_ns_def
 ns_name: symbol;
 
 /* ns simple definition */
-ns_def: '(' 'ns' metadata_form? ns_name docstring? attr_map? references ')'
-      | '(' 'ns' metadata_form? ns_name forms ')'
-      | '(' 'ns' forms ')'
+ns_def: '(' 'ns' metadata_form? ns_name docstring? attr_map? references ')' #simple_ns_def
+      | '(' 'ns' metadata_form? ns_name docstring? forms ')' #undefined_ns_with_name
+      | '(' 'ns' forms ')' #undefined_ns_def
       ;
 
 references: reference*;
 
-reference: require_reference
-         |  use_reference
-         | import_reference
-         | other_reference
-         ;
+reference: '(' keyword ref_entities ')';
 
-require_reference: '(' ':require' ref_entities ')';
+//reference: require_reference
+//         | use_reference
+//         | import_reference
+//         | other_reference
+//         ;
 
-use_reference: '(' ':use' ref_entities ')';
+//require_reference: '(' ':require' ref_entities ')';
 
-import_reference: '(' ':import' ref_entities ')';
+//use_reference: '(' ':use' ref_entities ')';
 
-other_reference: '(' keyword forms ')'; // unsupported for now cases
+//import_reference: '(' ':import' ref_entities ')';
+
+//other_reference: '(' keyword forms ')';
 
 ref_entities: ref_entity*;
 
@@ -285,10 +287,10 @@ simple_keyword: ':' symbol
               | 'ns'
               | ':ns'
               | 'ns#'
-              | ':use'
-              | ':user'
-              | ':user_id'
-              | ':username'
+              //| ':use'
+             // | ':user'
+             // | ':user_id'
+             // | ':username'
               | ':import'
               | ':require'
               | ':requires'

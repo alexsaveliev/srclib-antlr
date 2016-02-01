@@ -26,7 +26,7 @@ class ClojureParseTreeListener extends ClojureBaseListener {
 
     private LanguageImpl support;
 
-    private NamespaceContextResolver nsContextResolver =  NamespaceContextResolver.getInstance();
+    private NamespaceContextResolver nsContextResolver = NamespaceContextResolver.getInstance();
 
     private Map<ParserRuleContext, Boolean> defs = new IdentityHashMap<>();
 
@@ -61,17 +61,20 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         }
     }
 
-    @Override public void enterFn_binding(ClojureParser.Fn_bindingContext ctx) {
+    @Override
+    public void enterFn_binding(ClojureParser.Fn_bindingContext ctx) {
         nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next(PATH_SEPARATOR));
         List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
         saveParametersInScope(params);
     }
 
-    @Override public void exitFn_binding(ClojureParser.Fn_bindingContext ctx) {
+    @Override
+    public void exitFn_binding(ClojureParser.Fn_bindingContext ctx) {
         nsContextResolver.context().exitScope();
     }
 
-    @Override public void enterSimple_fn_def(ClojureParser.Simple_fn_defContext ctx) {
+    @Override
+    public void enterSimple_fn_def(ClojureParser.Simple_fn_defContext ctx) {
         ClojureParser.Fn_nameContext nameCtx = ctx.fn_name();
         String fnStartKeyword = ctx.fn_start().getText();
 
@@ -87,22 +90,26 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         }
     }
 
-    @Override public void exitSimple_fn_def(ClojureParser.Simple_fn_defContext ctx) {
+    @Override
+    public void exitSimple_fn_def(ClojureParser.Simple_fn_defContext ctx) {
         nsContextResolver.context().exitScope();
     }
 
-    @Override public void enterMulti_fn_def(ClojureParser.Multi_fn_defContext ctx) {
+    @Override
+    public void enterMulti_fn_def(ClojureParser.Multi_fn_defContext ctx) {
         ClojureParser.Fn_nameContext nameCtx = ctx.fn_name();
         String fnStartKeyword = ctx.fn_start().getText();
 
         enterFunctionWithName(nameCtx, fnStartKeyword);
     }
 
-    @Override public void exitMulti_fn_def(ClojureParser.Multi_fn_defContext ctx) {
+    @Override
+    public void exitMulti_fn_def(ClojureParser.Multi_fn_defContext ctx) {
         nsContextResolver.context().exitScope();
     }
 
-    @Override public void enterUndefined_fn_with_name(ClojureParser.Undefined_fn_with_nameContext ctx) {
+    @Override
+    public void enterUndefined_fn_with_name(ClojureParser.Undefined_fn_with_nameContext ctx) {
         ClojureParser.Fn_nameContext nameCtx = ctx.fn_name();
         String fnStartKeyword = ctx.fn_start().getText();
 
@@ -110,15 +117,18 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         LOGGER.warn("FUNCTION {} WITH UNDEFINED BODY OR PARAMETERS WAS FOUND, unable to process it fully", ctx.getText());
     }
 
-    @Override public void exitUndefined_fn_with_name(ClojureParser.Undefined_fn_with_nameContext ctx) {
+    @Override
+    public void exitUndefined_fn_with_name(ClojureParser.Undefined_fn_with_nameContext ctx) {
         nsContextResolver.context().exitScope();
     }
 
-    @Override public void enterUndefined_fn(ClojureParser.Undefined_fnContext ctx) {
+    @Override
+    public void enterUndefined_fn(ClojureParser.Undefined_fnContext ctx) {
         LOGGER.warn("UNDEFINED FUNCTION {} WAS FOUND, unable to process it", ctx.getText());
     }
 
-    @Override public void enterSimple_var_def(ClojureParser.Simple_var_defContext ctx) {
+    @Override
+    public void enterSimple_var_def(ClojureParser.Simple_var_defContext ctx) {
         ClojureParser.Var_nameContext nameCtx = ctx.var_name();
         String varStartKeyword = ctx.var_start().getText();
 
@@ -132,7 +142,8 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         defs.put(nameCtx.symbol(), true);
     }
 
-    @Override public void enterUndefined_var_def(ClojureParser.Undefined_var_defContext ctx) {
+    @Override
+    public void enterUndefined_var_def(ClojureParser.Undefined_var_defContext ctx) {
         LOGGER.warn("UNDEFINED VAR {} WAS FOUND, unable to process it", ctx.getText());
     }
 
@@ -153,43 +164,60 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         emit(ref, pathRes);
     }
 
-    @Override public void enterSimple_in_ns_def(ClojureParser.Simple_in_ns_defContext ctx) {
+    @Override
+    public void enterSimple_in_ns_def(ClojureParser.Simple_in_ns_defContext ctx) {
         nsContextResolver.enterNamespace(ctx.ns_name().getText());
     }
 
-    @Override public void enterUndefined_in_ns_def(ClojureParser.Undefined_in_ns_defContext ctx) {
+    @Override
+    public void enterUndefined_in_ns_def(ClojureParser.Undefined_in_ns_defContext ctx) {
         LOGGER.warn("UNDEFINED NAMESPACE {} WAS FOUND, unable to process it", ctx.getText());
     }
 
-//
-//    @Override
-//    public void enterNs_def(ClojureParser.Ns_defContext ctx) {
-//        String nsName = ctx.ns_name().getText();
-//
-//        nsContextResolver.enterNamespace(nsName);
-//
-//        List<ClojureParser.ReferenceContext> refs = ctx.references().reference();
-//        for (ClojureParser.ReferenceContext ref : refs) {
-//            if (ref.use_reference() != null) {
-//                List<ClojureParser.Ref_entityContext> refEnts = ref.use_reference().ref_entities().ref_entity();
-//                for (ClojureParser.Ref_entityContext refEnt : refEnts) {
-//                    if (refEnt.symbol() != null) {
-//                        nsContextResolver.addUsedNamespace(refEnt.getText());
-//                    } else {
-//                        LOGGER.warn("UNSUPPORTED entity = " + refEnt.getText() + "IN NS :USE REFERENCE");
-//                    }
-//                }
-//            } else if (ref.require_reference() != null) {
-//                LOGGER.warn(":REQUIRE REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
-//
-//            } else if (ref.import_reference() != null) {
-//                LOGGER.warn(":IMPORT REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
-//
-//            } else if (ref.other_reference() != null) {
-//                LOGGER.warn("REFERENCE = " + ref.getText() + "NOT SUPPORTED IN NS = " + nsName);
-//            }
-//        }
-//    }
+
+    @Override
+    public void enterSimple_ns_def(ClojureParser.Simple_ns_defContext ctx) {
+        String nsName = ctx.ns_name().getText();
+
+        nsContextResolver.enterNamespace(nsName);
+        defs.put(ctx.ns_name().symbol(), true);
+
+        for (ClojureParser.ReferenceContext ref : ctx.references().reference()) {
+            String refKeyword = ref.keyword().getText();
+
+            //add support for other keywords
+            if (refKeyword.equals(":use")) {
+                List<ClojureParser.Ref_entityContext> refEnts = ref.ref_entities().ref_entity();
+                for (ClojureParser.Ref_entityContext refEnt : refEnts) {
+                    //add support for lists and vectors
+                    if (refEnt.symbol() != null) {
+                        nsContextResolver.addUsedNamespace(refEnt.getText());
+                    } else {
+                        LOGGER.warn("UNSUPPORTED entity {} IN NS :USE REFERENCE", refEnt.getText());
+                    }
+                }
+            } else {
+                LOGGER.warn("REFERENCE = {} NOT SUPPORTED IN NS = {}", ref.getText(), nsName);
+            }
+        }
+    }
+
+    @Override
+    public void enterUndefined_ns_with_name(ClojureParser.Undefined_ns_with_nameContext ctx) {
+        String nsName = ctx.ns_name().getText();
+
+        nsContextResolver.enterNamespace(nsName);
+        defs.put(ctx.ns_name().symbol(), true);
+
+        LOGGER.warn(" NAMESPACE WITH UNSUPPORTED BODY WAS FOUND, unable to process it fully", ctx.getText());
+    }
+
+    @Override
+    public void enterUndefined_ns_def(ClojureParser.Undefined_ns_defContext ctx) {
+        LOGGER.warn("UNDEFINED NAMESPACE {} WAS FOUND, unable to process it", ctx.getText());
+    }
+
+
 //
 //    @Override
 //    public void enterLet_form(ClojureParser.Let_formContext ctx) {

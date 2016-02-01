@@ -35,12 +35,16 @@ public class Namespace {
         }
         for (String usedNs : usedNsNames) {
             Namespace namespace = namespaceContextResolver.getNamespaceByName(usedNs);
+            if (namespace == null) {
+               // LOGGER.warn("UNABLE TO ACCESS TO DEF OF NAMESPACE {}", usedNs);
+                return null;
+            }
             String res = namespace.lookup(fullName);
             if (res != null) {
                 return res;
             }
         }
-        //LOGGER.warn("NAME = " + fullName + " WAS NOT FOUND IN NS: " + name);
+        //LOGGER.warn("NAME = {} WAS NOT FOUND IN NS: {}", fullName, name);
         return null;
     }
 
