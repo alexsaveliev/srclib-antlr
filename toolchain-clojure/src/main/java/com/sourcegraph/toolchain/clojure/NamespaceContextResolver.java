@@ -17,16 +17,16 @@ public class NamespaceContextResolver {
     private Namespace currentNamespace;
     private Map<String, Namespace> allNamespaces = new HashMap<>();
 
-    private static NamespaceContextResolver instance = new NamespaceContextResolver ( );
+    //private static NamespaceContextResolver instance = new NamespaceContextResolver ( );
 
-    private NamespaceContextResolver() {
-        currentNamespace = new Namespace(CLOJURE_DEFAULT_NAMESPACE_NAME);
+    public NamespaceContextResolver() {
+        currentNamespace = new Namespace(CLOJURE_DEFAULT_NAMESPACE_NAME, this);
         allNamespaces.put(CLOJURE_DEFAULT_NAMESPACE_NAME,  currentNamespace);
     }
 
-    public static NamespaceContextResolver  getInstance( ) {
-        return instance;
-    }
+//    public static NamespaceContextResolver  getInstance( ) {
+//        return instance;
+//    }
 
     public Namespace getNamespaceByName(String name) {
         return allNamespaces.get(name);
@@ -42,7 +42,7 @@ public class NamespaceContextResolver {
         //getting previously saved context for namespace or creating new one
         Namespace savedNamespace = allNamespaces.get(nsName);
         if (savedNamespace == null) {
-            currentNamespace = new Namespace(nsName);
+            currentNamespace = new Namespace(nsName, this);
         } else {
             currentNamespace = savedNamespace;
         }

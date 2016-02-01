@@ -18,12 +18,15 @@ public class Namespace {
     //private List<String> usedDefs;
     //private List<String> excludedDefs;
 
-    private NamespaceContextResolver namespaceContextResolver = NamespaceContextResolver.getInstance();
+//    private NamespaceContextResolver namespaceContextResolver = NamespaceContextResolver.getInstance();
 
-    public Namespace(String name) {
+    private NamespaceContextResolver namespaceContextResolver;
+
+    public Namespace(String name, NamespaceContextResolver namespaceContextResolver) {
         this.name = name;
         context = new Context<>();
         usedNsNames = new ArrayList<>();
+        this.namespaceContextResolver = namespaceContextResolver;
     }
 
     public String lookup(String fullName) {

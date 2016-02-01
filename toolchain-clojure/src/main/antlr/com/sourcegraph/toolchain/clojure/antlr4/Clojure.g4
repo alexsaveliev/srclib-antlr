@@ -150,11 +150,12 @@ let_form: '(' 'let' '[' bindings ']' forms ')';
 
 bindings: binding* ;
 
-binding: var_name form #var_form_binding //supported case for now
-       | form #formbinding; //all others, unsupported
+//binding: var_name form #var_form_binding //supported case for now
+//       | form #form_binding; //all others, unsupported
 
-//binding: var_name form //supported case for now
-//       | form;  //all others, unsupported
+binding: var_name form
+       | form
+       ;
 
 forms: form* ;
 

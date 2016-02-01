@@ -26,7 +26,11 @@ class ClojureParseTreeListener extends ClojureBaseListener {
 
     private LanguageImpl support;
 
-    private NamespaceContextResolver nsContextResolver = NamespaceContextResolver.getInstance();
+//    private NamespaceContextResolver nsContextResolver = new NamespaceContextResolver.getInstance();
+
+    private NamespaceContextResolver nsContextResolver = new NamespaceContextResolver();
+
+    //Context<Boolean> context = new Context<>();
 
     private Map<ParserRuleContext, Boolean> defs = new IdentityHashMap<>();
 
@@ -217,34 +221,32 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         LOGGER.warn("UNDEFINED NAMESPACE {} WAS FOUND, unable to process it", ctx.getText());
     }
 
+    @Override
+    public void enterLet_form(ClojureParser.Let_formContext ctx) {
+        nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next(PATH_SEPARATOR));
 
-//
-//    @Override
-//    public void enterLet_form(ClojureParser.Let_formContext ctx) {
-//        nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next(PATH_SEPARATOR));
-//
-//        List<ClojureParser.BindingContext> bindingsCtx = ctx.bindings().binding();
-//        for (ClojureParser.BindingContext bindingCtx : bindingsCtx) {
-//            if (bindingCtx.var_name() != null) {
-//
-//                Def letvarDef = support.def(bindingCtx.var_name(), DefKind.LETVAR);
-//                letvarDef.format("letvar", StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
-//                letvarDef.defData.setKind("letvar");
-//
-//                emit(letvarDef, nsContextResolver.context().currentScope().getPathTo(letvarDef.name, PATH_SEPARATOR));
-//
-//                nsContextResolver.context().currentScope().put(bindingCtx.var_name().getText(), true);
-//                defs.put(bindingCtx.var_name().symbol(), true);
-//            } else {
-//                LOGGER.warn("UNSUPPORTED BINDING FORM = " + bindingCtx.getText() + "FOR LET DEFINITION = " + ctx.getText() + " WAS FOUND");
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void exitLet_form(ClojureParser.Let_formContext ctx) {
-//        nsContextResolver.context().exitScope();
-//    }
+        List<ClojureParser.BindingContext> bindingsCtx = ctx.bindings().binding();
+        for (ClojureParser.BindingContext bindingCtx : bindingsCtx) {
+            if (bindingCtx.var_name() != null) {
+
+                Def letvarDef = support.def(bindingCtx.var_name(), DefKind.LETVAR);
+                letvarDef.format("letvar", StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
+                letvarDef.defData.setKind("letvar");
+
+                emit(letvarDef, nsContextResolver.context().currentScope().getPathTo(letvarDef.name, PATH_SEPARATOR));
+
+                nsContextResolver.context().currentScope().put(bindingCtx.var_name().getText(), true);
+                defs.put(bindingCtx.var_name().symbol(), true);
+            } else {
+                LOGGER.warn("UNSUPPORTED BINDING FORM = {}  FOR LET DEFINITION = {}", bindingCtx.getText(), ctx.getText());
+            }
+        }
+    }
+
+    @Override
+    public void exitLet_form(ClojureParser.Let_formContext ctx) {
+        nsContextResolver.context().exitScope();
+    }
 
     private void emit(Def def, String path) {
         if (!support.firstPass) {
