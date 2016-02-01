@@ -41,6 +41,7 @@ form: function_def
     | in_ns_def
     | ns_def
     | let_form
+    | loop_form
     | literal
     | list
     | vector
@@ -161,17 +162,20 @@ ref_entity: ref_keyword // unsupported for now cases
 ref_keyword: keyword;
 ref_vector: vector;
 
-/* let_form */
-let_form: '(' 'let' '[' bindings ']' forms ')';
+/*forms with bindings */
 
 bindings: binding* ;
-
-//binding: var_name form #var_form_binding //supported case for now
-//       | form #form_binding; //all others, unsupported
 
 binding: var_name form #simple_binding
        | form #undefined_binding
        ;
+
+/* let_form */
+let_form: '(' 'let' '[' bindings ']' forms ')';
+
+/* loop_form */
+loop_form: '(' 'loop' '[' bindings ']' forms ')';
+
 
 forms: form* ;
 
@@ -315,6 +319,8 @@ simple_keyword: ':' symbol
               | ':requires'
               | 'let'
               | ':let'
+              | 'loop'
+              | ':loop'
               ;
 macro_keyword: ':' ':' symbol;
 
