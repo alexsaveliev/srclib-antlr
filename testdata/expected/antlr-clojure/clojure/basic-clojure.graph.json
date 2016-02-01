@@ -1,141 +1,6 @@
 {
   "Defs": [
     {
-      "Path": "ns1/bar",
-      "Name": "bar",
-      "Kind": "func",
-      "File": "fn-tests/fn-last-args.clj",
-      "DefStart": 6,
-      "DefEnd": 9,
-      "Data": {
-        "Type": "",
-        "Keyword": "defn",
-        "Kind": "defn",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar"
-    },
-    {
-      "Path": "ns1/bar.1.a",
-      "Name": "a",
-      "Kind": "param",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "DefStart": 21,
-      "DefEnd": 22,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.1.a"
-    },
-    {
-      "Path": "ns1/bar.1.b",
-      "Name": "b",
-      "Kind": "param",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "DefStart": 23,
-      "DefEnd": 24,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.1.b"
-    },
-    {
-      "Path": "ns1/bar.2.a",
-      "Name": "a",
-      "Kind": "param",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "DefStart": 54,
-      "DefEnd": 55,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.2.a"
-    },
-    {
-      "Path": "ns1/bar.2.b",
-      "Name": "b",
-      "Kind": "param",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "DefStart": 56,
-      "DefEnd": 57,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.2.b"
-    },
-    {
-      "Path": "ns1/bar.2.c",
-      "Name": "c",
-      "Kind": "param",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "DefStart": 58,
-      "DefEnd": 59,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.2.c"
-    },
-    {
-      "Path": "ns1/bar.a",
-      "Name": "a",
-      "Kind": "param",
-      "File": "fn-tests/fn-last-args.clj",
-      "DefStart": 11,
-      "DefEnd": 12,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.a"
-    },
-    {
-      "Path": "ns1/bar.b",
-      "Name": "b",
-      "Kind": "param",
-      "File": "fn-tests/fn-last-args.clj",
-      "DefStart": 13,
-      "DefEnd": 14,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.b"
-    },
-    {
-      "Path": "ns1/bar.c",
-      "Name": "c",
-      "Kind": "param",
-      "File": "fn-tests/fn-last-args.clj",
-      "DefStart": 18,
-      "DefEnd": 19,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/bar.c"
-    },
-    {
       "Path": "ns1/fn1",
       "Name": "fn1",
       "Kind": "func",
@@ -151,96 +16,6 @@
       "TreePath": "ns1/fn1"
     },
     {
-      "Path": "ns1/my-val",
-      "Name": "my-val",
-      "Kind": "var",
-      "File": "vars-tests/var-simple.clj",
-      "DefStart": 5,
-      "DefEnd": 11,
-      "Data": {
-        "Type": "",
-        "Keyword": "def",
-        "Kind": "def",
-        "Separator": ""
-      },
-      "TreePath": "ns1/my-val"
-    },
-    {
-      "Path": "ns1/my-val1",
-      "Name": "my-val1",
-      "Kind": "var",
-      "File": "vars-tests/var-simple.clj",
-      "DefStart": 21,
-      "DefEnd": 28,
-      "Data": {
-        "Type": "",
-        "Keyword": "def",
-        "Kind": "def",
-        "Separator": ""
-      },
-      "TreePath": "ns1/my-val1"
-    },
-    {
-      "Path": "ns1/my-val2",
-      "Name": "my-val2",
-      "Kind": "var",
-      "File": "vars-tests/var-simple.clj",
-      "DefStart": 43,
-      "DefEnd": 50,
-      "Data": {
-        "Type": "",
-        "Keyword": "def",
-        "Kind": "def",
-        "Separator": ""
-      },
-      "TreePath": "ns1/my-val2"
-    },
-    {
-      "Path": "ns1/round",
-      "Name": "round",
-      "Kind": "func",
-      "File": "fn-tests/fn-simple.clj",
-      "DefStart": 6,
-      "DefEnd": 11,
-      "Data": {
-        "Type": "",
-        "Keyword": "defn",
-        "Kind": "defn",
-        "Separator": ""
-      },
-      "TreePath": "ns1/round"
-    },
-    {
-      "Path": "ns1/round.d",
-      "Name": "d",
-      "Kind": "param",
-      "File": "fn-tests/fn-simple.clj",
-      "DefStart": 101,
-      "DefEnd": 102,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/round.d"
-    },
-    {
-      "Path": "ns1/round.precision",
-      "Name": "precision",
-      "Kind": "param",
-      "File": "fn-tests/fn-simple.clj",
-      "DefStart": 109,
-      "DefEnd": 118,
-      "Data": {
-        "Type": "",
-        "Keyword": "param",
-        "Kind": "param",
-        "Separator": ""
-      },
-      "TreePath": "ns1/round.precision"
-    },
-    {
       "Path": "ns1/val1",
       "Name": "val1",
       "Kind": "var",
@@ -254,36 +29,6 @@
         "Separator": ""
       },
       "TreePath": "ns1/val1"
-    },
-    {
-      "Path": "ns1/val2",
-      "Name": "val2",
-      "Kind": "var",
-      "File": "ns-tests/ns-simple.clj",
-      "DefStart": 119,
-      "DefEnd": 123,
-      "Data": {
-        "Type": "",
-        "Keyword": "def",
-        "Kind": "def",
-        "Separator": ""
-      },
-      "TreePath": "ns1/val2"
-    },
-    {
-      "Path": "ns1/val3",
-      "Name": "val3",
-      "Kind": "var",
-      "File": "ns-tests/ns-simple.clj",
-      "DefStart": 147,
-      "DefEnd": 151,
-      "Data": {
-        "Type": "",
-        "Keyword": "def",
-        "Kind": "def",
-        "Separator": ""
-      },
-      "TreePath": "ns1/val3"
     },
     {
       "Path": "ns1/val4",
@@ -331,6 +76,36 @@
       "TreePath": "ns1/var4"
     },
     {
+      "Path": "ns2/val2",
+      "Name": "val2",
+      "Kind": "var",
+      "File": "ns-tests/ns-simple.clj",
+      "DefStart": 119,
+      "DefEnd": 123,
+      "Data": {
+        "Type": "",
+        "Keyword": "def",
+        "Kind": "def",
+        "Separator": ""
+      },
+      "TreePath": "ns2/val2"
+    },
+    {
+      "Path": "ns2/val3",
+      "Name": "val3",
+      "Kind": "var",
+      "File": "ns-tests/ns-simple.clj",
+      "DefStart": 147,
+      "DefEnd": 151,
+      "Data": {
+        "Type": "",
+        "Keyword": "def",
+        "Kind": "def",
+        "Separator": ""
+      },
+      "TreePath": "ns2/val3"
+    },
+    {
       "Path": "ns2/var2",
       "Name": "var2",
       "Kind": "var",
@@ -359,151 +134,324 @@
         "Separator": ""
       },
       "TreePath": "ns2/var3"
+    },
+    {
+      "Path": "user/1.x",
+      "Name": "x",
+      "Kind": "letvar",
+      "File": "let-tests/let-simple.clj",
+      "DefStart": 6,
+      "DefEnd": 7,
+      "Data": {
+        "Type": "",
+        "Keyword": "letvar",
+        "Kind": "letvar",
+        "Separator": ""
+      },
+      "TreePath": "user/1.x"
+    },
+    {
+      "Path": "user/2.y",
+      "Name": "y",
+      "Kind": "letvar",
+      "File": "let-tests/let-simple.clj",
+      "DefStart": 27,
+      "DefEnd": 28,
+      "Data": {
+        "Type": "",
+        "Keyword": "letvar",
+        "Kind": "letvar",
+        "Separator": ""
+      },
+      "TreePath": "user/2.y"
+    },
+    {
+      "Path": "user/3.a",
+      "Name": "a",
+      "Kind": "letvar",
+      "File": "let-tests/let-simple.clj",
+      "DefStart": 48,
+      "DefEnd": 49,
+      "Data": {
+        "Type": "",
+        "Keyword": "letvar",
+        "Kind": "letvar",
+        "Separator": ""
+      },
+      "TreePath": "user/3.a"
+    },
+    {
+      "Path": "user/3.b",
+      "Name": "b",
+      "Kind": "letvar",
+      "File": "let-tests/let-simple.clj",
+      "DefStart": 52,
+      "DefEnd": 53,
+      "Data": {
+        "Type": "",
+        "Keyword": "letvar",
+        "Kind": "letvar",
+        "Separator": ""
+      },
+      "TreePath": "user/3.b"
+    },
+    {
+      "Path": "user/4.c",
+      "Name": "c",
+      "Kind": "letvar",
+      "File": "let-tests/let-simple.clj",
+      "DefStart": 83,
+      "DefEnd": 84,
+      "Data": {
+        "Type": "",
+        "Keyword": "letvar",
+        "Kind": "letvar",
+        "Separator": ""
+      },
+      "TreePath": "user/4.c"
+    },
+    {
+      "Path": "user/bar",
+      "Name": "bar",
+      "Kind": "func",
+      "File": "fn-tests/fn-last-args.clj",
+      "DefStart": 6,
+      "DefEnd": 9,
+      "Data": {
+        "Type": "",
+        "Keyword": "defn",
+        "Kind": "defn",
+        "Separator": ""
+      },
+      "TreePath": "user/bar"
+    },
+    {
+      "Path": "user/bar.1.a",
+      "Name": "a",
+      "Kind": "param",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "DefStart": 21,
+      "DefEnd": 22,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.1.a"
+    },
+    {
+      "Path": "user/bar.1.b",
+      "Name": "b",
+      "Kind": "param",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "DefStart": 23,
+      "DefEnd": 24,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.1.b"
+    },
+    {
+      "Path": "user/bar.2.a",
+      "Name": "a",
+      "Kind": "param",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "DefStart": 54,
+      "DefEnd": 55,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.2.a"
+    },
+    {
+      "Path": "user/bar.2.b",
+      "Name": "b",
+      "Kind": "param",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "DefStart": 56,
+      "DefEnd": 57,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.2.b"
+    },
+    {
+      "Path": "user/bar.2.c",
+      "Name": "c",
+      "Kind": "param",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "DefStart": 58,
+      "DefEnd": 59,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.2.c"
+    },
+    {
+      "Path": "user/bar.a",
+      "Name": "a",
+      "Kind": "param",
+      "File": "fn-tests/fn-last-args.clj",
+      "DefStart": 11,
+      "DefEnd": 12,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.a"
+    },
+    {
+      "Path": "user/bar.b",
+      "Name": "b",
+      "Kind": "param",
+      "File": "fn-tests/fn-last-args.clj",
+      "DefStart": 13,
+      "DefEnd": 14,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.b"
+    },
+    {
+      "Path": "user/bar.c",
+      "Name": "c",
+      "Kind": "param",
+      "File": "fn-tests/fn-last-args.clj",
+      "DefStart": 18,
+      "DefEnd": 19,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/bar.c"
+    },
+    {
+      "Path": "user/my-val",
+      "Name": "my-val",
+      "Kind": "var",
+      "File": "vars-tests/var-simple.clj",
+      "DefStart": 5,
+      "DefEnd": 11,
+      "Data": {
+        "Type": "",
+        "Keyword": "def",
+        "Kind": "def",
+        "Separator": ""
+      },
+      "TreePath": "user/my-val"
+    },
+    {
+      "Path": "user/my-val1",
+      "Name": "my-val1",
+      "Kind": "var",
+      "File": "vars-tests/var-simple.clj",
+      "DefStart": 21,
+      "DefEnd": 28,
+      "Data": {
+        "Type": "",
+        "Keyword": "def",
+        "Kind": "def",
+        "Separator": ""
+      },
+      "TreePath": "user/my-val1"
+    },
+    {
+      "Path": "user/my-val2",
+      "Name": "my-val2",
+      "Kind": "var",
+      "File": "vars-tests/var-simple.clj",
+      "DefStart": 43,
+      "DefEnd": 50,
+      "Data": {
+        "Type": "",
+        "Keyword": "def",
+        "Kind": "def",
+        "Separator": ""
+      },
+      "TreePath": "user/my-val2"
+    },
+    {
+      "Path": "user/round",
+      "Name": "round",
+      "Kind": "func",
+      "File": "fn-tests/fn-simple.clj",
+      "DefStart": 6,
+      "DefEnd": 11,
+      "Data": {
+        "Type": "",
+        "Keyword": "defn",
+        "Kind": "defn",
+        "Separator": ""
+      },
+      "TreePath": "user/round"
+    },
+    {
+      "Path": "user/round.1.factor",
+      "Name": "factor",
+      "Kind": "letvar",
+      "File": "fn-tests/fn-simple.clj",
+      "DefStart": 173,
+      "DefEnd": 179,
+      "Data": {
+        "Type": "",
+        "Keyword": "letvar",
+        "Kind": "letvar",
+        "Separator": ""
+      },
+      "TreePath": "user/round.1.factor"
+    },
+    {
+      "Path": "user/round.d",
+      "Name": "d",
+      "Kind": "param",
+      "File": "fn-tests/fn-simple.clj",
+      "DefStart": 101,
+      "DefEnd": 102,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/round.d"
+    },
+    {
+      "Path": "user/round.precision",
+      "Name": "precision",
+      "Kind": "param",
+      "File": "fn-tests/fn-simple.clj",
+      "DefStart": 109,
+      "DefEnd": 118,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/round.precision"
     }
   ],
   "Refs": [
-    {
-      "DefPath": "ns1/bar.1.a",
-      "Def": true,
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 21,
-      "End": 22
-    },
-    {
-      "DefPath": "ns1/bar.1.a",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 33,
-      "End": 34
-    },
-    {
-      "DefPath": "ns1/bar.1.b",
-      "Def": true,
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 23,
-      "End": 24
-    },
-    {
-      "DefPath": "ns1/bar.1.b",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 35,
-      "End": 36
-    },
-    {
-      "DefPath": "ns1/bar.2.a",
-      "Def": true,
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 54,
-      "End": 55
-    },
-    {
-      "DefPath": "ns1/bar.2.a",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 64,
-      "End": 65
-    },
-    {
-      "DefPath": "ns1/bar.2.b",
-      "Def": true,
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 56,
-      "End": 57
-    },
-    {
-      "DefPath": "ns1/bar.2.b",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 66,
-      "End": 67
-    },
-    {
-      "DefPath": "ns1/bar.2.c",
-      "Def": true,
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 58,
-      "End": 59
-    },
-    {
-      "DefPath": "ns1/bar.2.c",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 68,
-      "End": 69
-    },
-    {
-      "DefPath": "ns1/bar.a",
-      "Def": true,
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 11,
-      "End": 12
-    },
-    {
-      "DefPath": "ns1/bar.a",
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 51,
-      "End": 52
-    },
-    {
-      "DefPath": "ns1/bar.a",
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 72,
-      "End": 73
-    },
-    {
-      "DefPath": "ns1/bar.b",
-      "Def": true,
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 13,
-      "End": 14
-    },
-    {
-      "DefPath": "ns1/bar.b",
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 53,
-      "End": 54
-    },
-    {
-      "DefPath": "ns1/bar.b",
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 74,
-      "End": 75
-    },
-    {
-      "DefPath": "ns1/bar.c",
-      "Def": true,
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 18,
-      "End": 19
-    },
-    {
-      "DefPath": "ns1/bar.c",
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 35,
-      "End": 36
-    },
-    {
-      "DefPath": "ns1/bar.c",
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 55,
-      "End": 56
-    },
-    {
-      "DefPath": "ns1/bar",
-      "Def": true,
-      "File": "fn-tests/fn-last-args.clj",
-      "Start": 6,
-      "End": 9
-    },
-    {
-      "DefPath": "ns1/bar",
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 29,
-      "End": 32
-    },
-    {
-      "DefPath": "ns1/bar",
-      "Def": true,
-      "File": "fn-tests/fn-multiple-let.clj",
-      "Start": 6,
-      "End": 9
-    },
     {
       "DefPath": "ns1/fn1",
       "File": "ns-tests/ns-simple.clj",
@@ -522,102 +470,6 @@
       "File": "ns-tests/ns-simple.clj",
       "Start": 40,
       "End": 43
-    },
-    {
-      "DefPath": "ns1/my-val1",
-      "Def": true,
-      "File": "vars-tests/var-simple.clj",
-      "Start": 21,
-      "End": 28
-    },
-    {
-      "DefPath": "ns1/my-val1",
-      "File": "vars-tests/var-simple.clj",
-      "Start": 79,
-      "End": 86
-    },
-    {
-      "DefPath": "ns1/my-val2",
-      "Def": true,
-      "File": "vars-tests/var-simple.clj",
-      "Start": 43,
-      "End": 50
-    },
-    {
-      "DefPath": "ns1/my-val",
-      "File": "vars-tests/var-simple.clj",
-      "Start": 29,
-      "End": 35
-    },
-    {
-      "DefPath": "ns1/my-val",
-      "Def": true,
-      "File": "vars-tests/var-simple.clj",
-      "Start": 5,
-      "End": 11
-    },
-    {
-      "DefPath": "ns1/my-val",
-      "File": "vars-tests/var-simple.clj",
-      "Start": 72,
-      "End": 78
-    },
-    {
-      "DefPath": "ns1/round.d",
-      "Def": true,
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 101,
-      "End": 102
-    },
-    {
-      "DefPath": "ns1/round.d",
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 139,
-      "End": 140
-    },
-    {
-      "DefPath": "ns1/round.d",
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 243,
-      "End": 244
-    },
-    {
-      "DefPath": "ns1/round.precision",
-      "Def": true,
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 109,
-      "End": 118
-    },
-    {
-      "DefPath": "ns1/round.precision",
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 152,
-      "End": 161
-    },
-    {
-      "DefPath": "ns1/round.precision",
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 193,
-      "End": 202
-    },
-    {
-      "DefPath": "ns1/round",
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 210,
-      "End": 215
-    },
-    {
-      "DefPath": "ns1/round",
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 266,
-      "End": 271
-    },
-    {
-      "DefPath": "ns1/round",
-      "Def": true,
-      "File": "fn-tests/fn-simple.clj",
-      "Start": 6,
-      "End": 11
     },
     {
       "DefPath": "ns1/val1",
@@ -643,32 +495,6 @@
       "File": "ns-tests/ns-simple.clj",
       "Start": 57,
       "End": 61
-    },
-    {
-      "DefPath": "ns1/val2",
-      "Def": true,
-      "File": "ns-tests/ns-simple.clj",
-      "Start": 119,
-      "End": 123
-    },
-    {
-      "DefPath": "ns1/val2",
-      "File": "ns-tests/ns-simple.clj",
-      "Start": 155,
-      "End": 159
-    },
-    {
-      "DefPath": "ns1/val3",
-      "Def": true,
-      "File": "ns-tests/ns-simple.clj",
-      "Start": 147,
-      "End": 151
-    },
-    {
-      "DefPath": "ns1/val3",
-      "File": "ns-tests/ns-simple.clj",
-      "Start": 179,
-      "End": 187
     },
     {
       "DefPath": "ns1/val4",
@@ -716,6 +542,26 @@
       "End": 186
     },
     {
+      "DefPath": "ns2/val2",
+      "Def": true,
+      "File": "ns-tests/ns-simple.clj",
+      "Start": 119,
+      "End": 123
+    },
+    {
+      "DefPath": "ns2/val2",
+      "File": "ns-tests/ns-simple.clj",
+      "Start": 155,
+      "End": 159
+    },
+    {
+      "DefPath": "ns2/val3",
+      "Def": true,
+      "File": "ns-tests/ns-simple.clj",
+      "Start": 147,
+      "End": 151
+    },
+    {
       "DefPath": "ns2/var2",
       "File": "ns-tests/in-ns.clj",
       "Start": 195,
@@ -746,6 +592,328 @@
       "File": "ns-tests/in-ns.clj",
       "Start": 74,
       "End": 78
+    },
+    {
+      "DefPath": "user/1.x",
+      "File": "let-tests/let-simple.clj",
+      "Start": 17,
+      "End": 18
+    },
+    {
+      "DefPath": "user/1.x",
+      "Def": true,
+      "File": "let-tests/let-simple.clj",
+      "Start": 6,
+      "End": 7
+    },
+    {
+      "DefPath": "user/2.y",
+      "Def": true,
+      "File": "let-tests/let-simple.clj",
+      "Start": 27,
+      "End": 28
+    },
+    {
+      "DefPath": "user/2.y",
+      "File": "let-tests/let-simple.clj",
+      "Start": 38,
+      "End": 39
+    },
+    {
+      "DefPath": "user/3.a",
+      "Def": true,
+      "File": "let-tests/let-simple.clj",
+      "Start": 48,
+      "End": 49
+    },
+    {
+      "DefPath": "user/3.a",
+      "File": "let-tests/let-simple.clj",
+      "Start": 70,
+      "End": 71
+    },
+    {
+      "DefPath": "user/3.b",
+      "Def": true,
+      "File": "let-tests/let-simple.clj",
+      "Start": 52,
+      "End": 53
+    },
+    {
+      "DefPath": "user/3.b",
+      "File": "let-tests/let-simple.clj",
+      "Start": 72,
+      "End": 73
+    },
+    {
+      "DefPath": "user/4.c",
+      "File": "let-tests/let-simple.clj",
+      "Start": 144,
+      "End": 145
+    },
+    {
+      "DefPath": "user/4.c",
+      "Def": true,
+      "File": "let-tests/let-simple.clj",
+      "Start": 83,
+      "End": 84
+    },
+    {
+      "DefPath": "user/bar.1.a",
+      "Def": true,
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 21,
+      "End": 22
+    },
+    {
+      "DefPath": "user/bar.1.a",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 33,
+      "End": 34
+    },
+    {
+      "DefPath": "user/bar.1.b",
+      "Def": true,
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 23,
+      "End": 24
+    },
+    {
+      "DefPath": "user/bar.1.b",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 35,
+      "End": 36
+    },
+    {
+      "DefPath": "user/bar.2.a",
+      "Def": true,
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 54,
+      "End": 55
+    },
+    {
+      "DefPath": "user/bar.2.a",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 64,
+      "End": 65
+    },
+    {
+      "DefPath": "user/bar.2.b",
+      "Def": true,
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 56,
+      "End": 57
+    },
+    {
+      "DefPath": "user/bar.2.b",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 66,
+      "End": 67
+    },
+    {
+      "DefPath": "user/bar.2.c",
+      "Def": true,
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 58,
+      "End": 59
+    },
+    {
+      "DefPath": "user/bar.2.c",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 68,
+      "End": 69
+    },
+    {
+      "DefPath": "user/bar.a",
+      "Def": true,
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 11,
+      "End": 12
+    },
+    {
+      "DefPath": "user/bar.a",
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 51,
+      "End": 52
+    },
+    {
+      "DefPath": "user/bar.a",
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 72,
+      "End": 73
+    },
+    {
+      "DefPath": "user/bar.b",
+      "Def": true,
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 13,
+      "End": 14
+    },
+    {
+      "DefPath": "user/bar.b",
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 53,
+      "End": 54
+    },
+    {
+      "DefPath": "user/bar.b",
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 74,
+      "End": 75
+    },
+    {
+      "DefPath": "user/bar.c",
+      "Def": true,
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 18,
+      "End": 19
+    },
+    {
+      "DefPath": "user/bar.c",
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 35,
+      "End": 36
+    },
+    {
+      "DefPath": "user/bar.c",
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 55,
+      "End": 56
+    },
+    {
+      "DefPath": "user/bar",
+      "Def": true,
+      "File": "fn-tests/fn-last-args.clj",
+      "Start": 6,
+      "End": 9
+    },
+    {
+      "DefPath": "user/bar",
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 29,
+      "End": 32
+    },
+    {
+      "DefPath": "user/bar",
+      "Def": true,
+      "File": "fn-tests/fn-multiple-let.clj",
+      "Start": 6,
+      "End": 9
+    },
+    {
+      "DefPath": "user/my-val1",
+      "Def": true,
+      "File": "vars-tests/var-simple.clj",
+      "Start": 21,
+      "End": 28
+    },
+    {
+      "DefPath": "user/my-val1",
+      "File": "vars-tests/var-simple.clj",
+      "Start": 79,
+      "End": 86
+    },
+    {
+      "DefPath": "user/my-val2",
+      "Def": true,
+      "File": "vars-tests/var-simple.clj",
+      "Start": 43,
+      "End": 50
+    },
+    {
+      "DefPath": "user/my-val",
+      "File": "vars-tests/var-simple.clj",
+      "Start": 29,
+      "End": 35
+    },
+    {
+      "DefPath": "user/my-val",
+      "Def": true,
+      "File": "vars-tests/var-simple.clj",
+      "Start": 5,
+      "End": 11
+    },
+    {
+      "DefPath": "user/my-val",
+      "File": "vars-tests/var-simple.clj",
+      "Start": 72,
+      "End": 78
+    },
+    {
+      "DefPath": "user/round.1.factor",
+      "Def": true,
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 173,
+      "End": 179
+    },
+    {
+      "DefPath": "user/round.1.factor",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 245,
+      "End": 251
+    },
+    {
+      "DefPath": "user/round.1.factor",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 254,
+      "End": 260
+    },
+    {
+      "DefPath": "user/round.d",
+      "Def": true,
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 101,
+      "End": 102
+    },
+    {
+      "DefPath": "user/round.d",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 139,
+      "End": 140
+    },
+    {
+      "DefPath": "user/round.d",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 243,
+      "End": 244
+    },
+    {
+      "DefPath": "user/round.precision",
+      "Def": true,
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 109,
+      "End": 118
+    },
+    {
+      "DefPath": "user/round.precision",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 152,
+      "End": 161
+    },
+    {
+      "DefPath": "user/round.precision",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 193,
+      "End": 202
+    },
+    {
+      "DefPath": "user/round",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 210,
+      "End": 215
+    },
+    {
+      "DefPath": "user/round",
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 266,
+      "End": 271
+    },
+    {
+      "DefPath": "user/round",
+      "Def": true,
+      "File": "fn-tests/fn-simple.clj",
+      "Start": 6,
+      "End": 11
     }
   ]
 }
