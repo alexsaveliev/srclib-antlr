@@ -36,6 +36,7 @@ grammar Clojure;
 file: form*;
 
 form: function_def
+    | anonym_fn_def
     | var_def
     | in_ns_def
     | ns_def
@@ -68,9 +69,9 @@ metadata_form: meta_tag;
 
 meta_tag: '^' form;
 
-fn_binding: '[' attr_map? arguments']' prepost_map?  fn_body;
-
 fn_bindings: ('(' fn_binding ')')+;
+
+fn_binding: '[' attr_map? arguments']' prepost_map?  fn_body;
 
 arguments: parameter*;
 
@@ -88,6 +89,21 @@ attr_map: map;
 prepost_map: map;
 
 fn_body: forms;
+
+/* anonymous function fn definitions */
+//(fn name? [params* ] condition-map? exprs*)
+//(fn name? ([params* ] condition-map? exprs*)+)
+
+anonym_fn_def: '(' 'fn' fn_name? '[' arguments last_arguments? ']' condition_map? fn_body ')' #simple_anonym_fn_def
+             | '(' 'fn' fn_name? anonym_fn_bindings ')' #multi_anonym_fn_def
+             | '(' 'fn' forms ')' #undefined_anonym_fn
+             ;
+
+anonym_fn_bindings: ('(' anonym_fn_binding ')')+;
+
+anonym_fn_binding: '[' arguments']' condition_map?  fn_body;
+
+condition_map: map;
 
 /* variable definitions */
 
@@ -288,6 +304,8 @@ simple_keyword: ':' symbol
               | 'ns'
               | ':ns'
               | 'ns#'
+              | 'fn'
+              | ':fn'
               //| ':use'
              // | ':user'
              // | ':user_id'

@@ -51,6 +51,15 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         nsContextResolver.context().enterScope(new Scope<>(nameCtx.getText(), nsContextResolver.context().currentScope().getPrefix()));
     }
 
+    private void enterAnonymousFunction(ClojureParser.Fn_nameContext fn_name) {
+//        if (fn_name != null) {
+//            nsContextResolver.context().enterScope(new Scope<>(fn_name.getText(), nsContextResolver.context().currentScope().getPrefix()));
+//        } else {
+//            nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next('='));
+//        }
+        nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next('='));
+    }
+
     private void saveParametersInScope(List<ClojureParser.ParameterContext> params) {
         for (ClojureParser.ParameterContext param : params) {
             ClojureParser.Parameter_nameContext paramNameCtx = param.parameter_name();
@@ -74,6 +83,18 @@ class ClojureParseTreeListener extends ClojureBaseListener {
 
     @Override
     public void exitFn_binding(ClojureParser.Fn_bindingContext ctx) {
+        nsContextResolver.context().exitScope();
+    }
+
+    @Override
+    public void enterAnonym_fn_binding(ClojureParser.Anonym_fn_bindingContext ctx) {
+        nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next(PATH_SEPARATOR));
+        List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
+        saveParametersInScope(params);
+    }
+
+    @Override
+    public void exitAnonym_fn_binding(ClojureParser.Anonym_fn_bindingContext ctx) {
         nsContextResolver.context().exitScope();
     }
 
@@ -132,6 +153,40 @@ class ClojureParseTreeListener extends ClojureBaseListener {
     }
 
     @Override
+    public void enterSimple_anonym_fn_def(ClojureParser.Simple_anonym_fn_defContext ctx) {
+        enterAnonymousFunction(ctx.fn_name());
+
+        List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
+        saveParametersInScope(params);
+
+        //Processing of last arguments
+        if (ctx.last_arguments() != null) {
+            List<ClojureParser.ParameterContext> lastArgs = ctx.last_arguments().parameters().parameter();
+            saveParametersInScope(lastArgs);
+        }
+    }
+
+    @Override
+    public void exitSimple_anonym_fn_def(ClojureParser.Simple_anonym_fn_defContext ctx) {
+        nsContextResolver.context().exitScope();
+    }
+
+    @Override
+    public void enterMulti_anonym_fn_def(ClojureParser.Multi_anonym_fn_defContext ctx) {
+        enterAnonymousFunction(ctx.fn_name());
+    }
+
+    @Override
+    public void exitMulti_anonym_fn_def(ClojureParser.Multi_anonym_fn_defContext ctx) {
+        nsContextResolver.context().exitScope();
+    }
+
+    @Override
+    public void enterUndefined_anonym_fn(ClojureParser.Undefined_anonym_fnContext ctx) {
+        LOGGER.warn("UNDEFINED ANONYM FUNCTION FN {} WAS FOUND, unable to process it", ctx.getText());
+    }
+
+    @Override
     public void enterSimple_var_def(ClojureParser.Simple_var_defContext ctx) {
         ClojureParser.Var_nameContext nameCtx = ctx.var_name();
         String varStartKeyword = ctx.var_start().getText();
@@ -177,7 +232,6 @@ class ClojureParseTreeListener extends ClojureBaseListener {
     public void enterUndefined_in_ns_def(ClojureParser.Undefined_in_ns_defContext ctx) {
         LOGGER.warn("UNDEFINED NAMESPACE {} WAS FOUND, unable to process it", ctx.getText());
     }
-
 
     @Override
     public void enterSimple_ns_def(ClojureParser.Simple_ns_defContext ctx) {
