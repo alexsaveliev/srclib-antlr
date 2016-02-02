@@ -35,7 +35,8 @@ grammar Clojure;
 
 file: form*;
 
-form: function_def
+form: letfn_form
+    | function_def
     | anonym_fn_def
     | var_def
     | in_ns_def
@@ -48,6 +49,21 @@ form: function_def
     | map
     | reader_macro
     ;
+
+letfn_form: '(' 'letfn' '[' letfn_function_defs ']' forms ')' #simple_letfn_form
+          | '(' 'letfn' forms ')' #undefined_letfn_form
+          ;
+
+letfn_function_defs: letfn_function_def*;
+
+letfn_function_def: '(' fn_name '[' arguments']' fn_body ')' #simple_letfn_function_def
+                  | '(' fn_name letfn_function_bindings ')'  #multiple_letfn_function_def
+                  ;
+
+letfn_function_bindings: ('(' letfn_function_binding ')')+;
+
+letfn_function_binding: '[' arguments']' fn_body;
+
 
 /* function definitions */
 //function_def: '(' fn_start metadata_form? fn_name docstring? '[' arguments last_arguments? ']' forms ')';
@@ -321,7 +337,10 @@ simple_keyword: ':' symbol
               | ':let'
               | 'loop'
               | ':loop'
+              | 'letfn'
+              | ':letfn'
               ;
+
 macro_keyword: ':' ':' symbol;
 
 symbol: ns_symbol | simple_sym;
