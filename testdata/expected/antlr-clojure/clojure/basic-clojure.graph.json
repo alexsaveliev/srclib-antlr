@@ -211,16 +211,106 @@
       "TreePath": "user/1.2.z"
     },
     {
+      "Path": "user/1.match",
+      "Name": "match",
+      "Kind": "binding_var",
+      "File": "loop-tests/loop.clj",
+      "DefStart": 8,
+      "DefEnd": 13,
+      "Data": {
+        "Type": "",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
+        "Separator": ""
+      },
+      "TreePath": "user/1.match"
+    },
+    {
+      "Path": "user/1.result",
+      "Name": "result",
+      "Kind": "binding_var",
+      "File": "loop-tests/loop.clj",
+      "DefStart": 84,
+      "DefEnd": 90,
+      "Data": {
+        "Type": "",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
+        "Separator": ""
+      },
+      "TreePath": "user/1.result"
+    },
+    {
+      "Path": "user/1.six-times",
+      "Name": "six-times",
+      "Kind": "func",
+      "File": "letfn-tests/letfn-simple.clj",
+      "DefStart": 48,
+      "DefEnd": 57,
+      "Data": {
+        "Type": "",
+        "Keyword": "letfn",
+        "Kind": "letfn",
+        "Separator": ""
+      },
+      "TreePath": "user/1.six-times"
+    },
+    {
+      "Path": "user/1.six-times.y",
+      "Name": "y",
+      "Kind": "param",
+      "File": "letfn-tests/letfn-simple.clj",
+      "DefStart": 59,
+      "DefEnd": 60,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/1.six-times.y"
+    },
+    {
+      "Path": "user/1.twice",
+      "Name": "twice",
+      "Kind": "func",
+      "File": "letfn-tests/letfn-simple.clj",
+      "DefStart": 9,
+      "DefEnd": 14,
+      "Data": {
+        "Type": "",
+        "Keyword": "letfn",
+        "Kind": "letfn",
+        "Separator": ""
+      },
+      "TreePath": "user/1.twice"
+    },
+    {
+      "Path": "user/1.twice.x",
+      "Name": "x",
+      "Kind": "param",
+      "File": "letfn-tests/letfn-simple.clj",
+      "DefStart": 16,
+      "DefEnd": 17,
+      "Data": {
+        "Type": "",
+        "Keyword": "param",
+        "Kind": "param",
+        "Separator": ""
+      },
+      "TreePath": "user/1.twice.x"
+    },
+    {
       "Path": "user/1.x",
       "Name": "x",
-      "Kind": "letvar",
+      "Kind": "binding_var",
       "File": "let-tests/let-simple.clj",
       "DefStart": 6,
       "DefEnd": 7,
       "Data": {
         "Type": "",
-        "Keyword": "letvar",
-        "Kind": "letvar",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
         "Separator": ""
       },
       "TreePath": "user/1.x"
@@ -256,16 +346,31 @@
       "TreePath": "user/2.d"
     },
     {
+      "Path": "user/2.x",
+      "Name": "x",
+      "Kind": "binding_var",
+      "File": "loop-tests/loop.clj",
+      "DefStart": 267,
+      "DefEnd": 268,
+      "Data": {
+        "Type": "",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
+        "Separator": ""
+      },
+      "TreePath": "user/2.x"
+    },
+    {
       "Path": "user/2.y",
       "Name": "y",
-      "Kind": "letvar",
+      "Kind": "binding_var",
       "File": "let-tests/let-simple.clj",
       "DefStart": 27,
       "DefEnd": 28,
       "Data": {
         "Type": "",
-        "Keyword": "letvar",
-        "Kind": "letvar",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
         "Separator": ""
       },
       "TreePath": "user/2.y"
@@ -273,29 +378,44 @@
     {
       "Path": "user/3.a",
       "Name": "a",
-      "Kind": "letvar",
+      "Kind": "binding_var",
       "File": "let-tests/let-simple.clj",
       "DefStart": 48,
       "DefEnd": 49,
       "Data": {
         "Type": "",
-        "Keyword": "letvar",
-        "Kind": "letvar",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
         "Separator": ""
       },
       "TreePath": "user/3.a"
     },
     {
+      "Path": "user/3.acc",
+      "Name": "acc",
+      "Kind": "binding_var",
+      "File": "loop-tests/loop.clj",
+      "DefStart": 349,
+      "DefEnd": 352,
+      "Data": {
+        "Type": "",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
+        "Separator": ""
+      },
+      "TreePath": "user/3.acc"
+    },
+    {
       "Path": "user/3.b",
       "Name": "b",
-      "Kind": "letvar",
+      "Kind": "binding_var",
       "File": "let-tests/let-simple.clj",
       "DefStart": 52,
       "DefEnd": 53,
       "Data": {
         "Type": "",
-        "Keyword": "letvar",
-        "Kind": "letvar",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
         "Separator": ""
       },
       "TreePath": "user/3.b"
@@ -316,16 +436,31 @@
       "TreePath": "user/3.c"
     },
     {
+      "Path": "user/3.iter",
+      "Name": "iter",
+      "Kind": "binding_var",
+      "File": "loop-tests/loop.clj",
+      "DefStart": 335,
+      "DefEnd": 339,
+      "Data": {
+        "Type": "",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
+        "Separator": ""
+      },
+      "TreePath": "user/3.iter"
+    },
+    {
       "Path": "user/4.c",
       "Name": "c",
-      "Kind": "letvar",
+      "Kind": "binding_var",
       "File": "let-tests/let-simple.clj",
       "DefStart": 83,
       "DefEnd": 84,
       "Data": {
         "Type": "",
-        "Keyword": "letvar",
-        "Kind": "letvar",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
         "Separator": ""
       },
       "TreePath": "user/4.c"
@@ -618,14 +753,14 @@
     {
       "Path": "user/round.1.factor",
       "Name": "factor",
-      "Kind": "letvar",
+      "Kind": "binding_var",
       "File": "fn-tests/fn-simple.clj",
       "DefStart": 173,
       "DefEnd": 179,
       "Data": {
         "Type": "",
-        "Keyword": "letvar",
-        "Kind": "letvar",
+        "Keyword": "binding_var",
+        "Kind": "binding_var",
         "Separator": ""
       },
       "TreePath": "user/round.1.factor"
@@ -869,6 +1004,102 @@
       "End": 49
     },
     {
+      "DefPath": "user/1.match",
+      "File": "loop-tests/loop.clj",
+      "Start": 116,
+      "End": 121
+    },
+    {
+      "DefPath": "user/1.match",
+      "File": "loop-tests/loop.clj",
+      "Start": 249,
+      "End": 254
+    },
+    {
+      "DefPath": "user/1.match",
+      "Def": true,
+      "File": "loop-tests/loop.clj",
+      "Start": 8,
+      "End": 13
+    },
+    {
+      "DefPath": "user/1.result",
+      "File": "loop-tests/loop.clj",
+      "Start": 137,
+      "End": 143
+    },
+    {
+      "DefPath": "user/1.result",
+      "File": "loop-tests/loop.clj",
+      "Start": 242,
+      "End": 248
+    },
+    {
+      "DefPath": "user/1.result",
+      "Def": true,
+      "File": "loop-tests/loop.clj",
+      "Start": 84,
+      "End": 90
+    },
+    {
+      "DefPath": "user/1.six-times.y",
+      "Def": true,
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 59,
+      "End": 60
+    },
+    {
+      "DefPath": "user/1.six-times.y",
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 83,
+      "End": 84
+    },
+    {
+      "DefPath": "user/1.six-times",
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 156,
+      "End": 165
+    },
+    {
+      "DefPath": "user/1.six-times",
+      "Def": true,
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 48,
+      "End": 57
+    },
+    {
+      "DefPath": "user/1.twice.x",
+      "Def": true,
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 16,
+      "End": 17
+    },
+    {
+      "DefPath": "user/1.twice.x",
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 33,
+      "End": 34
+    },
+    {
+      "DefPath": "user/1.twice",
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 116,
+      "End": 121
+    },
+    {
+      "DefPath": "user/1.twice",
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 77,
+      "End": 82
+    },
+    {
+      "DefPath": "user/1.twice",
+      "Def": true,
+      "File": "letfn-tests/letfn-simple.clj",
+      "Start": 9,
+      "End": 14
+    },
+    {
       "DefPath": "user/1.x",
       "File": "let-tests/let-simple.clj",
       "Start": 17,
@@ -908,6 +1139,31 @@
       "End": 70
     },
     {
+      "DefPath": "user/2.x",
+      "Def": true,
+      "File": "loop-tests/loop.clj",
+      "Start": 267,
+      "End": 268
+    },
+    {
+      "DefPath": "user/2.x",
+      "File": "loop-tests/loop.clj",
+      "Start": 284,
+      "End": 285
+    },
+    {
+      "DefPath": "user/2.x",
+      "File": "loop-tests/loop.clj",
+      "Start": 302,
+      "End": 303
+    },
+    {
+      "DefPath": "user/2.x",
+      "File": "loop-tests/loop.clj",
+      "Start": 319,
+      "End": 320
+    },
+    {
       "DefPath": "user/2.y",
       "Def": true,
       "File": "let-tests/let-simple.clj",
@@ -919,6 +1175,25 @@
       "File": "let-tests/let-simple.clj",
       "Start": 38,
       "End": 39
+    },
+    {
+      "DefPath": "user/3.acc",
+      "Def": true,
+      "File": "loop-tests/loop.clj",
+      "Start": 349,
+      "End": 352
+    },
+    {
+      "DefPath": "user/3.acc",
+      "File": "loop-tests/loop.clj",
+      "Start": 388,
+      "End": 391
+    },
+    {
+      "DefPath": "user/3.acc",
+      "File": "loop-tests/loop.clj",
+      "Start": 418,
+      "End": 421
     },
     {
       "DefPath": "user/3.a",
@@ -984,6 +1259,31 @@
       "File": "fn-tests/anonym-fn.clj",
       "Start": 153,
       "End": 154
+    },
+    {
+      "DefPath": "user/3.iter",
+      "Def": true,
+      "File": "loop-tests/loop.clj",
+      "Start": 335,
+      "End": 339
+    },
+    {
+      "DefPath": "user/3.iter",
+      "File": "loop-tests/loop.clj",
+      "Start": 366,
+      "End": 370
+    },
+    {
+      "DefPath": "user/3.iter",
+      "File": "loop-tests/loop.clj",
+      "Start": 409,
+      "End": 413
+    },
+    {
+      "DefPath": "user/3.iter",
+      "File": "loop-tests/loop.clj",
+      "Start": 422,
+      "End": 426
     },
     {
       "DefPath": "user/4.c",
