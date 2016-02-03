@@ -11,7 +11,7 @@
         "Type": "",
         "Keyword": "defn",
         "Kind": "defn",
-        "Separator": ""
+        "Separator": " "
       },
       "TreePath": "ns1/fn1"
     },
@@ -248,10 +248,10 @@
       "DefStart": 48,
       "DefEnd": 57,
       "Data": {
-        "Type": "",
+        "Type": "y",
         "Keyword": "letfn",
         "Kind": "letfn",
-        "Separator": ""
+        "Separator": " "
       },
       "TreePath": "user/1.six-times"
     },
@@ -278,10 +278,10 @@
       "DefStart": 9,
       "DefEnd": 14,
       "Data": {
-        "Type": "",
+        "Type": "x",
         "Keyword": "letfn",
         "Kind": "letfn",
-        "Separator": ""
+        "Separator": " "
       },
       "TreePath": "user/1.twice"
     },
@@ -563,10 +563,10 @@
       "DefStart": 6,
       "DefEnd": 9,
       "Data": {
-        "Type": "",
+        "Type": "a b  \u0026  c",
         "Keyword": "defn",
         "Kind": "defn",
-        "Separator": ""
+        "Separator": " "
       },
       "TreePath": "user/bar"
     },
@@ -743,10 +743,10 @@
       "DefStart": 6,
       "DefEnd": 11,
       "Data": {
-        "Type": "",
+        "Type": "d precision",
         "Keyword": "defn",
         "Kind": "defn",
-        "Separator": ""
+        "Separator": " "
       },
       "TreePath": "user/round"
     },
