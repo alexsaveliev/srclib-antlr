@@ -16,6 +16,8 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.StringJoiner;
+
 
 class ClojureParseTreeListener extends ClojureBaseListener {
 
@@ -79,7 +81,8 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         ClojureParser.Fn_nameContext nameCtx = ctx.fn_name();
         String fnStartKeyword = ctx.fn_start().getText();
 
-        enterFunctionWithName(nameCtx, fnStartKeyword);
+        enterFunctionWithName(nameCtx, fnStartKeyword, formParamsDoc(ctx.arguments().parameter(), ctx.last_arguments()));
+
 
         List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
         saveParametersInScope(params);
@@ -180,7 +183,7 @@ class ClojureParseTreeListener extends ClojureBaseListener {
     @Override
     public void enterSimple_letfn_function_def(ClojureParser.Simple_letfn_function_defContext ctx) {
         ClojureParser.Fn_nameContext nameCtx = ctx.fn_name();
-        enterFunctionWithName(nameCtx, "letfn");
+        enterFunctionWithName(nameCtx, "letfn", formParamsDoc(ctx.arguments().parameter(), null));
 
         List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
         saveParametersInScope(params);
@@ -328,10 +331,32 @@ class ClojureParseTreeListener extends ClojureBaseListener {
     public void exitLoop_form(ClojureParser.Loop_formContext ctx) {
         nsContextResolver.context().exitScope();
     }
+    private String formParamsDoc(List<ClojureParser.ParameterContext> params, ClojureParser.Last_argumentsContext lastArgs) {
+        StringJoiner joiner = new StringJoiner(" ");
+        for (ClojureParser.ParameterContext param : params) {
+            ClojureParser.Parameter_nameContext paramNameCtx = param.parameter_name();
+            joiner.add(paramNameCtx.getText());
+        }
 
-    private void enterFunctionWithName(ClojureParser.Fn_nameContext nameCtx, String fnStartKeyword) {
+        if (lastArgs != null) {
+            joiner.add(" & ");
+            List<ClojureParser.ParameterContext> lastParams = lastArgs.parameters().parameter();
+            for (ClojureParser.ParameterContext param : lastParams) {
+                ClojureParser.Parameter_nameContext paramNameCtx = param.parameter_name();
+                joiner.add(paramNameCtx.getText());
+            }
+        }
+        return joiner.toString();
+    }
+
+    private void enterFunctionWithName( ClojureParser.Fn_nameContext nameCtx, String fnStartKeyword) {
+        enterFunctionWithName(nameCtx, fnStartKeyword, StringUtils.EMPTY);
+    }
+
+    private void enterFunctionWithName(ClojureParser.Fn_nameContext nameCtx, String fnStartKeyword, String paramDoc) {
         Def fnDef = support.def(nameCtx, DefKind.FUNC);
-        fnDef.format(fnStartKeyword, StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
+        fnDef.format(fnStartKeyword, paramDoc, DefData.SEPARATOR_SPACE);
+
         //fnDef.format(fnStartKeyword, "param1 param2", DefData.SEPARATOR_SPACE);
         fnDef.defData.setKind(fnStartKeyword);
 
