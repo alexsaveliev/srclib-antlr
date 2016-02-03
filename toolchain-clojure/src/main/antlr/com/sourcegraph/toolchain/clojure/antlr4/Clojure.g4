@@ -25,7 +25,7 @@
  */
 
 /*
-* Based on https://raw.githubusercontent.com/antlr/grammars-v4/fd8dc428039208dc25c0803f5d6ff38e6750d4e4/swift/Swift.g4
+* Based on https://github.com/antlr/grammars-v4/blob/master/clojure/Clojure.g4
 */
 grammar Clojure;
 
@@ -111,6 +111,11 @@ fn_body: forms;
 //(fn name? [params* ] condition-map? exprs*)
 //(fn name? ([params* ] condition-map? exprs*)+)
 
+//anonym_fn_def: '(' FN_SPECIAL_FORM fn_name? '[' arguments last_arguments? ']' condition_map? fn_body ')' #simple_anonym_fn_def
+//             | '(' FN_SPECIAL_FORM   fn_name? anonym_fn_bindings ')' #multi_anonym_fn_def
+//             | '(' FN_SPECIAL_FORM   forms ')' #undefined_anonym_fn
+//             ;
+
 anonym_fn_def: '(' 'fn' fn_name? '[' arguments last_arguments? ']' condition_map? fn_body ')' #simple_anonym_fn_def
              | '(' 'fn' fn_name? anonym_fn_bindings ')' #multi_anonym_fn_def
              | '(' 'fn' forms ')' #undefined_anonym_fn
@@ -137,8 +142,8 @@ init: form;
 
 /* in-ns namespace def */
 
-in_ns_def: '(' 'in-ns ' '\'' ns_name ')' #simple_in_ns_def
-         | '(' 'in-ns ' forms ')' #undefined_in_ns_def
+in_ns_def: '(' 'in-ns' '\'' ns_name ')' #simple_in_ns_def
+         | '(' 'in-ns' forms ')' #undefined_in_ns_def
          ;
 
 ns_name: symbol;
@@ -148,6 +153,11 @@ ns_def: '(' 'ns' metadata_form? ns_name docstring? attr_map? references ')' #sim
       | '(' 'ns' metadata_form? ns_name docstring? forms ')' #undefined_ns_with_name
       | '(' 'ns' forms ')' #undefined_ns_def
       ;
+
+//ns_def: '(' NS_SPECIAL_FORM metadata_form? ns_name docstring? attr_map? references ')' #simple_ns_def
+//      | '(' NS_SPECIAL_FORM metadata_form? ns_name docstring? forms ')' #undefined_ns_with_name
+//      | '(' NS_SPECIAL_FORM forms ')' #undefined_ns_def
+//      ;
 
 references: reference*;
 
@@ -326,15 +336,15 @@ simple_keyword: ':' symbol
               | 'ns#'
               | 'fn'
               | ':fn'
+              | 'in-ns'
+//              | ':fns'
               //| ':use'
              // | ':user'
              // | ':user_id'
              // | ':username'
-              | ':import'
-              | ':require'
-              | ':requires'
               | 'let'
               | ':let'
+              | ':letter'
               | 'loop'
               | ':loop'
               | 'letfn'
@@ -351,6 +361,10 @@ param_name: PARAM_NAME;
 
 // Lexers
 //--------------------------------------------------------------------
+
+//NS_SPECIAL_FORM: 'ns';
+
+//FN_SPECIAL_FORM: 'fn';
 
 STRING : '"' ( ~'"' | '\\' '"' )* '"' ;
 
