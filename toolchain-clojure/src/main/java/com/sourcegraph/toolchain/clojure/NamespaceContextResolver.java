@@ -8,25 +8,34 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class consists methods and variables which are used for saving namespaces with their contexts,
+ * getting namespace by name, name resolution in all known namespaces
+ */
 public class NamespaceContextResolver {
     private static final Logger LOGGER = LoggerFactory.getLogger(NamespaceContextResolver.class);
 
+    /**
+     * Delimiter for namespace and name separation in Clojure, for example ns1/user1
+     */
     public static final String NAMESPACE_SEPARATOR = "/";
+
+    /**
+     * Default namespace in Clojure
+     */
     private static final String CLOJURE_DEFAULT_NAMESPACE_NAME = "user";
 
     private Namespace currentNamespace;
-    private Map<String, Namespace> allNamespaces = new HashMap<>();
 
-    //private static NamespaceContextResolver instance = new NamespaceContextResolver ( );
+    /**
+     * List of all user-defined namespaces for current program
+     */
+    private Map<String, Namespace> allNamespaces = new HashMap<>();
 
     public NamespaceContextResolver() {
         currentNamespace = new Namespace(CLOJURE_DEFAULT_NAMESPACE_NAME, this);
-        allNamespaces.put(CLOJURE_DEFAULT_NAMESPACE_NAME,  currentNamespace);
+        allNamespaces.put(CLOJURE_DEFAULT_NAMESPACE_NAME, currentNamespace);
     }
-
-//    public static NamespaceContextResolver  getInstance( ) {
-//        return instance;
-//    }
 
     public Namespace getNamespaceByName(String name) {
         return allNamespaces.get(name);
@@ -36,6 +45,12 @@ public class NamespaceContextResolver {
         return currentNamespace.getContext();
     }
 
+    /**
+     * Saves information about current namespace - name, context when program enter new one
+     * Creates new namespace with defined name
+     * Changes current namespace
+     * @param nsName Name of new namespace
+     */
     public void enterNamespace(String nsName) {
         allNamespaces.put(currentNamespace.getName(), currentNamespace);
 
@@ -48,6 +63,14 @@ public class NamespaceContextResolver {
         }
     }
 
+    /**
+     * Provides name resolution functionality
+     * First tries to qualify given identifier as simple or full-qualified - with namespace prefix
+     * If name is full qualified tries to split it into namespace name and simple name, than
+     * looks for specified namespace, if such namespace is found, tries to resolve simple name inside it
+     * @param ctx Identifier to resolve
+     * @return Result of resolution - full path of found identifier
+     */
     public String lookup(ClojureParser.SymbolContext ctx) {
 
         String fullName = ctx.getText();
@@ -69,10 +92,17 @@ public class NamespaceContextResolver {
         return currentNamespace.lookup(fullName);
     }
 
+    /**
+     * @return Current namespace name
+     */
     public String currentNamespaceName() {
         return currentNamespace.getName();
     }
 
+    /**
+     * Adds namespace name to list of used by current namespace
+     * @param namespace Namespace name
+     */
     public void addUsedNamespace(String namespace) {
         currentNamespace.addUsedNamespace(namespace);
     }

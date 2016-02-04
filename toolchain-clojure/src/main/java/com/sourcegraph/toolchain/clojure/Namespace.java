@@ -8,18 +8,31 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents Namespace entity with its name, context and list of used namespaces
+ */
 public class Namespace {
     private static final Logger LOGGER = LoggerFactory.getLogger(NamespaceContextResolver.class);
 
+    /**
+     * Namespace name, sets once during creation
+     */
     private String name;
+
+    /**
+     * Namespace context for lookup of definitions
+     */
     private Context<Boolean> context;
+
+    /**
+     * List of used namespaces
+     * For example (:use 'ns1 'ns2) - ns1, ns2 will be in the list
+     */
     private List<String> usedNsNames;
 
-    //private List<String> usedDefs;
-    //private List<String> excludedDefs;
-
-//    private NamespaceContextResolver namespaceContextResolver = NamespaceContextResolver.getInstance();
-
+    /**
+     * General context resolver, saves all namespaces, provides namespace by its name
+     */
     private NamespaceContextResolver namespaceContextResolver;
 
     public Namespace(String name, NamespaceContextResolver namespaceContextResolver) {
@@ -29,6 +42,12 @@ public class Namespace {
         this.namespaceContextResolver = namespaceContextResolver;
     }
 
+    /**
+     * Lookup method for names, tries to find specified names in the current namespace (context).
+     * If such lookup does not succeed tries to find name in the used namespaces
+     * @param fullName Full name of identifier for lookup
+     * @return Full path of found identifier
+     */
     public String lookup(String fullName) {
         //good for short name
         LookupResult result = context.lookup(fullName);
@@ -39,7 +58,7 @@ public class Namespace {
         for (String usedNs : usedNsNames) {
             Namespace namespace = namespaceContextResolver.getNamespaceByName(usedNs);
             if (namespace == null) {
-               // LOGGER.warn("UNABLE TO ACCESS TO DEF OF NAMESPACE {}", usedNs);
+                // LOGGER.warn("UNABLE TO ACCESS TO DEF OF NAMESPACE {}", usedNs);
                 return null;
             }
             String res = namespace.lookup(fullName);
@@ -55,10 +74,15 @@ public class Namespace {
         return name;
     }
 
+
     public Context<Boolean> getContext() {
         return context;
     }
 
+    /**
+     * Saves name of namespace in the list of used namespaces
+     * @param namespace Name of used namespace
+     */
     public void addUsedNamespace(String namespace) {
         usedNsNames.add(namespace);
     }

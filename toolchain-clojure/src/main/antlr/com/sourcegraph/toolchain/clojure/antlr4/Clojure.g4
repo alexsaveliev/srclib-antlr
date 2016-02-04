@@ -25,7 +25,7 @@
  */
 
 /*
-* Based on https://github.com/antlr/grammars-v4/blob/master/clojure/Clojure.g4
+* Based on https://github.com/antlr/grammars-v4/blob/eeffdd8dd9ff8fd4236419dcd60fde4b44f214f3/clojure/Clojure.g4
 */
 grammar Clojure;
 

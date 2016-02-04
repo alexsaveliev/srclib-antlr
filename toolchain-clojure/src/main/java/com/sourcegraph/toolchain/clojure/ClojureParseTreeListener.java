@@ -21,18 +21,13 @@ import java.util.StringJoiner;
 
 class ClojureParseTreeListener extends ClojureBaseListener {
 
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ClojureParseTreeListener.class);
 
     public static final char PATH_SEPARATOR = '.';
 
     private LanguageImpl support;
 
-//    private NamespaceContextResolver nsContextResolver = new NamespaceContextResolver.getInstance();
-
     private NamespaceContextResolver nsContextResolver = new NamespaceContextResolver();
-
-    //Context<Boolean> context = new Context<>();
 
     private Map<ParserRuleContext, Boolean> defs = new IdentityHashMap<>();
 
@@ -81,15 +76,15 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         ClojureParser.Fn_nameContext nameCtx = ctx.fn_name();
         String fnStartKeyword = ctx.fn_start().getText();
 
-        enterFunctionWithName(nameCtx, fnStartKeyword, formParamsDoc(ctx.arguments().parameter(), ctx.last_arguments()));
-
-
         List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
+        ClojureParser.Last_argumentsContext lastArgsCtx = ctx.last_arguments();
+
+        enterFunctionWithName(nameCtx, fnStartKeyword, formParamsDoc(params, lastArgsCtx));
         saveParametersInScope(params);
 
         //Processing of last arguments
-        if (ctx.last_arguments() != null) {
-            List<ClojureParser.ParameterContext> lastArgs = ctx.last_arguments().parameters().parameter();
+        if (lastArgsCtx != null) {
+            List<ClojureParser.ParameterContext> lastArgs = lastArgsCtx.parameters().parameter();
             saveParametersInScope(lastArgs);
         }
     }
@@ -138,9 +133,10 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
         saveParametersInScope(params);
 
-        //Processing of last arguments
-        if (ctx.last_arguments() != null) {
-            List<ClojureParser.ParameterContext> lastArgs = ctx.last_arguments().parameters().parameter();
+        ClojureParser.Last_argumentsContext lastArgsCtx = ctx.last_arguments();
+        //Processing last arguments
+        if (lastArgsCtx != null) {
+            List<ClojureParser.ParameterContext> lastArgs = lastArgsCtx.parameters().parameter();
             saveParametersInScope(lastArgs);
         }
     }
@@ -183,9 +179,9 @@ class ClojureParseTreeListener extends ClojureBaseListener {
     @Override
     public void enterSimple_letfn_function_def(ClojureParser.Simple_letfn_function_defContext ctx) {
         ClojureParser.Fn_nameContext nameCtx = ctx.fn_name();
-        enterFunctionWithName(nameCtx, "letfn", formParamsDoc(ctx.arguments().parameter(), null));
-
         List<ClojureParser.ParameterContext> params = ctx.arguments().parameter();
+
+        enterFunctionWithName(nameCtx, "letfn", formParamsDoc(params, null));
         saveParametersInScope(params);
     }
 
@@ -205,7 +201,6 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         nsContextResolver.context().exitScope();
     }
 
-
     @Override
     public void enterSimple_var_def(ClojureParser.Simple_var_defContext ctx) {
         ClojureParser.Var_nameContext nameCtx = ctx.var_name();
@@ -215,9 +210,10 @@ class ClojureParseTreeListener extends ClojureBaseListener {
         varDef.format(varStartKeyword, StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
         varDef.defData.setKind(varStartKeyword);
 
-        emit(varDef, nsContextResolver.context().currentScope().getPathTo(varDef.name, PATH_SEPARATOR));
+        Scope currentScope = nsContextResolver.context().currentScope();
 
-        nsContextResolver.context().currentScope().put(varDef.name, true);
+        emit(varDef, currentScope.getPathTo(varDef.name, PATH_SEPARATOR));
+        currentScope.put(varDef.name, true);
         defs.put(nameCtx.symbol(), true);
     }
 
@@ -255,10 +251,11 @@ class ClojureParseTreeListener extends ClojureBaseListener {
 
     @Override
     public void enterSimple_ns_def(ClojureParser.Simple_ns_defContext ctx) {
-        String nsName = ctx.ns_name().getText();
+        ClojureParser.Ns_nameContext nsNameCtx = ctx.ns_name();
+        String nsName = nsNameCtx.getText();
 
         nsContextResolver.enterNamespace(nsName);
-        defs.put(ctx.ns_name().symbol(), true);
+        defs.put(nsNameCtx.symbol(), true);
 
         for (ClojureParser.ReferenceContext ref : ctx.references().reference()) {
             String refKeyword = ref.keyword().getText();
@@ -282,10 +279,11 @@ class ClojureParseTreeListener extends ClojureBaseListener {
 
     @Override
     public void enterUndefined_ns_with_name(ClojureParser.Undefined_ns_with_nameContext ctx) {
-        String nsName = ctx.ns_name().getText();
+        ClojureParser.Ns_nameContext nsNameCtx = ctx.ns_name();
+        String nsName = nsNameCtx.getText();
 
         nsContextResolver.enterNamespace(nsName);
-        defs.put(ctx.ns_name().symbol(), true);
+        defs.put(nsNameCtx.symbol(), true);
 
         LOGGER.warn(" NAMESPACE WITH UNSUPPORTED BODY WAS FOUND, unable to process it fully", ctx.getText());
     }
@@ -297,14 +295,16 @@ class ClojureParseTreeListener extends ClojureBaseListener {
 
     @Override
     public void enterSimple_binding(ClojureParser.Simple_bindingContext ctx) {
-        Def bindVar = support.def(ctx.var_name(), DefKind.BINDING_VAR);
+        ClojureParser.Var_nameContext varCtx = ctx.var_name();
+        Def bindVar = support.def(varCtx, DefKind.BINDING_VAR);
         bindVar.format("binding_var", StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
         bindVar.defData.setKind("binding_var");
 
-        emit(bindVar, nsContextResolver.context().currentScope().getPathTo(bindVar.name, PATH_SEPARATOR));
+        Scope currentScope = nsContextResolver.context().currentScope();
+        emit(bindVar, currentScope.getPathTo(bindVar.name, PATH_SEPARATOR));
 
-        nsContextResolver.context().currentScope().put(ctx.var_name().getText(), true);
-        defs.put(ctx.var_name().symbol(), true);
+        currentScope.put(varCtx.getText(), true);
+        defs.put(varCtx.symbol(), true);
     }
 
     @Override
@@ -331,59 +331,74 @@ class ClojureParseTreeListener extends ClojureBaseListener {
     public void exitLoop_form(ClojureParser.Loop_formContext ctx) {
         nsContextResolver.context().exitScope();
     }
+
+    /**
+     * Forms docstring with parameters description of function
+     * @param params List of parameters for defined function
+     * @param lastArgs List of last arguments - optional parameters after '&' sign
+     * @return String doc representation for Clojure formatter - "param1 param2 & param3"
+     */
     private String formParamsDoc(List<ClojureParser.ParameterContext> params, ClojureParser.Last_argumentsContext lastArgs) {
         StringJoiner joiner = new StringJoiner(" ");
         for (ClojureParser.ParameterContext param : params) {
-            ClojureParser.Parameter_nameContext paramNameCtx = param.parameter_name();
-            joiner.add(paramNameCtx.getText());
+            joiner.add(param.parameter_name().getText());
         }
 
         if (lastArgs != null) {
             joiner.add(" & ");
             List<ClojureParser.ParameterContext> lastParams = lastArgs.parameters().parameter();
             for (ClojureParser.ParameterContext param : lastParams) {
-                ClojureParser.Parameter_nameContext paramNameCtx = param.parameter_name();
-                joiner.add(paramNameCtx.getText());
+                joiner.add(param.parameter_name().getText());
             }
         }
         return joiner.toString();
     }
 
-    private void enterFunctionWithName( ClojureParser.Fn_nameContext nameCtx, String fnStartKeyword) {
+    private void enterFunctionWithName(ClojureParser.Fn_nameContext nameCtx, String fnStartKeyword) {
         enterFunctionWithName(nameCtx, fnStartKeyword, StringUtils.EMPTY);
     }
 
+    /**
+     * Emits new function definition into current context, enter new named scope
+     * @param nameCtx
+     * @param fnStartKeyword Function start keyword - defn, defmacro, defonce..
+     * @param paramDoc String representation of parameters used by Clojure formatter
+     */
     private void enterFunctionWithName(ClojureParser.Fn_nameContext nameCtx, String fnStartKeyword, String paramDoc) {
         Def fnDef = support.def(nameCtx, DefKind.FUNC);
         fnDef.format(fnStartKeyword, paramDoc, DefData.SEPARATOR_SPACE);
-
-        //fnDef.format(fnStartKeyword, "param1 param2", DefData.SEPARATOR_SPACE);
         fnDef.defData.setKind(fnStartKeyword);
 
-        emit(fnDef, nsContextResolver.context().currentScope().getPathTo(fnDef.name, PATH_SEPARATOR));
+        Scope currentScope = nsContextResolver.context().currentScope();
 
-        nsContextResolver.context().currentScope().put(fnDef.name, true);
+        emit(fnDef, currentScope.getPathTo(fnDef.name, PATH_SEPARATOR));
+        currentScope.put(fnDef.name, true);
         defs.put(nameCtx.symbol(), true);
 
-        String currentScopeName = nsContextResolver.context().currentScope().getName();
-
-        String prefix = nsContextResolver.context().currentScope().getPrefix();
-
+        String currentScopeName = currentScope.getName();
+        String prefix = currentScope.getPrefix();
+        //checking if we are inside root context - to avoid adding path separator in this case
+        //prefix is modified to resolve situation when named scope is included into unnamed, see letfn tests
         if (!currentScopeName.equals(StringUtils.EMPTY)) {
             prefix = currentScopeName + PATH_SEPARATOR + prefix;
         }
         nsContextResolver.context().enterScope(new Scope<>(nameCtx.getText(), prefix));
     }
 
+    /**
+     * Enters function without name, just creates new scope, no definitions are provided
+     * Fn_name is optional and useless, so it is skipped here
+     * @param fn_name
+     */
     private void enterAnonymousFunction(ClojureParser.Fn_nameContext fn_name) {
-//        if (fn_name != null) {
-//            nsContextResolver.context().enterScope(new Scope<>(fn_name.getText(), nsContextResolver.context().currentScope().getPrefix()));
-//        } else {
-//            nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next('='));
-//        }
         nsContextResolver.context().enterScope(nsContextResolver.context().currentScope().next(PATH_SEPARATOR));
     }
 
+    /**
+     * Saves parameters, last arguments in scope for simple function definition, anonymous function definition,
+     * different function bindings
+     * @param params
+     */
     private void saveParametersInScope(List<ClojureParser.ParameterContext> params) {
         for (ClojureParser.ParameterContext param : params) {
             ClojureParser.Parameter_nameContext paramNameCtx = param.parameter_name();
@@ -391,9 +406,10 @@ class ClojureParseTreeListener extends ClojureBaseListener {
             paramDef.format("param", StringUtils.EMPTY, DefData.SEPARATOR_EMPTY);
             paramDef.defData.setKind("param");
 
-            emit(paramDef, nsContextResolver.context().currentScope().getPathTo(paramDef.name, PATH_SEPARATOR));
+            Scope currentScope = nsContextResolver.context().currentScope();
 
-            nsContextResolver.context().currentScope().put(paramNameCtx.getText(), true);
+            emit(paramDef, currentScope.getPathTo(paramDef.name, PATH_SEPARATOR));
+            currentScope.put(paramNameCtx.getText(), true);
             defs.put(paramNameCtx.symbol(), true);
         }
     }
