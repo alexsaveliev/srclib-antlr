@@ -25,7 +25,8 @@ public class LanguageImpl extends LanguageBase {
     @Override
     protected void parse(File sourceFile) throws ParseException {
         try {
-            GrammarConfiguration configuration = LanguageBase.createGrammarConfiguration(sourceFile,
+            GrammarConfiguration configuration = LanguageBase.createGrammarConfiguration(this,
+        	    sourceFile,
                     JavaScriptLexer.class,
                     JavaScriptParser.class,
                     new DefaultErrorListener(sourceFile));
